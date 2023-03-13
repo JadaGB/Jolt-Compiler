@@ -1,6 +1,5 @@
-
 # ------------------------------------------------------------
-# Jolt
+# Jolt Programming Language
 #Jada Bailey & Garcian Mairs
 # ------------------------------------------------------------
 import ply.lex as lex
