@@ -1,9 +1,7 @@
 
 # ------------------------------------------------------------
-# calclex.py
-#
-# tokenizer for a simple expression evaluator for
-# numbers and +,-,*,/
+# Jolt
+#Jada Bailey & Garcian Mairs
 # ------------------------------------------------------------
 import ply.lex as lex
 
