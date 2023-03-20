@@ -5,7 +5,15 @@
 import ply.lex as lex
 
 # List of token names.   This is always required
-tokens = (
+
+reserved = {
+   'ef' : 'IF',
+   'den' : 'THEN',
+   'none' : 'ELSE',
+   'efnot' : 'ELSEIF',
+}
+
+tokens = [
     #Literals
    'NUMBA',
    'DECI',
@@ -44,22 +52,23 @@ tokens = (
    'CLOSEBRACE',
    'DOUBLE_LESS',
    'DOUBLE_GREATER',
-)
+] + list(reserved.values())
 
 #Regular Expressions for Tokens - Simple
+t_INCREMENT  = r'\+\+'
+t_DECREMENT  = r'\-\-'
 t_PLUS    = r'\+'
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
 t_MODULUS  = r'%'
-t_INCREMENT  = r'\+\+'
-t_DECREMENT  = r'\--'
 
-t_AND  = r'@'
+
+t_AND  = r'\@'
 t_OR  = r'\|'
 t_NOT  = r'\?'
 
-t_EQUAL    = r'\=='
+t_EQUAL    = r'\=\='
 t_NOT_EQUAL   = r'\?\='
 t_GREATER_THAN  = r'\>'
 t_LESS_THAN  = r'<'
@@ -77,7 +86,7 @@ t_CLOSEBRACE  = r'\)'
 
 #Regular Expressions for Tokens - Functions
 def t_DECI(t):
-    r'^\d+\.\d+$'
+    r'\d+\.\d+'
     t.value = float(t.value)
     return t
 
@@ -101,7 +110,7 @@ def t_WUD(t):
     return t
 
 def t_WHICHEVA(t):
-    r'True|False'
+    r'False' #Need to fix
     t.value = bool(t.value)
     return t
 
@@ -126,7 +135,8 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-data = '~as A $$$ GIRL~'
+data = ''' False'''
+
 #'''3.1'''
 #check for 3 + 4 * 10 + - 20
 #epr + term
