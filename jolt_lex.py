@@ -15,7 +15,8 @@ reserved = {
    'deci':'Deci',
    'wud':'Wud',
    'letta':'Letta',
-   'show' : 'SHOW'
+   'show' : 'SHOW',
+   'function' : 'FUNCTION'
 }
 
 tokens = [
