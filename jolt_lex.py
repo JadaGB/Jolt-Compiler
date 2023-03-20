@@ -7,13 +7,21 @@ import ply.lex as lex
 # List of token names.   This is always required
 
 reserved = {
-   'ef' : 'IF',
-   'den' : 'THEN',
-   'none' : 'ELSE',
-   'efnot' : 'ELSEIF',
+   'ef' : 'EF',
+   'den' : 'DEN',
+   'efnot' : 'EFNOT',
+   'oref' : 'OREF',
+   'mumba':'Numba',
+   'deci':'Deci',
+   'wud':'Wud',
+   'letta':'Letta',
+   'show' : 'SHOW'
 }
 
 tokens = [
+
+    'IDENTIFIER',
+
     #Literals
    'NUMBA',
    'DECI',
@@ -26,9 +34,8 @@ tokens = [
    'MINUS',
    'TIMES',
    'DIVIDE',
-   'MODULUS',
-   'INCREMENT',
-   'DECREMENT',
+#    'INCREMENT',
+#    'DECREMENT',
 
     #Logical Operators
    'AND',
@@ -55,13 +62,12 @@ tokens = [
 ] + list(reserved.values())
 
 #Regular Expressions for Tokens - Simple
-t_INCREMENT  = r'\+\+'
-t_DECREMENT  = r'\-\-'
+# t_INCREMENT  = r'\+\+'
+# t_DECREMENT  = r'\-\-'
 t_PLUS    = r'\+'
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
-t_MODULUS  = r'%'
 
 
 t_AND  = r'\@'
@@ -85,6 +91,11 @@ t_OPENBRACE  = r'\('
 t_CLOSEBRACE  = r'\)'
 
 #Regular Expressions for Tokens - Functions
+def t_IDENTIFIER(t):
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    t.type = reserved.get(t.value, "IDENTIFIER")
+    return t
+
 def t_DECI(t):
     r'\d+\.\d+'
     t.value = float(t.value)
@@ -117,7 +128,7 @@ def t_WHICHEVA(t):
 def t_COMMENT(t):
     r'~.*~'
     t.value = t.value
-    return t
+    pass
 
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -126,6 +137,7 @@ def t_newline(t):
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
+#t_ignore_COMMENT = r'\~.*\~'
 
 # Error handling rule
 def t_error(t):
