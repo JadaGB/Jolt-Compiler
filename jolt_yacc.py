@@ -227,15 +227,23 @@ def p_error(p):
     print("Syntax Error: Input invalid")
     print(f"Syntax error at line {p.lineno}: {p.value}")
 
-# Build the parser
-parser = yacc.yacc()
 
-print('_______________________________________________________________________________')
-while True:
-   try:
-       s = input('Jolt >> ')
-   except EOFError:
-       break
-   if not s: continue
-   result = parser.parse(s)
-   print(result)
+
+def parseifileinput(file):
+    # Build the parser
+    parser = yacc.yacc()
+
+    print('_______________________________________________________________________________')
+    while True:
+        with open(file, 'r') as f:
+            while True:
+                for line in f.readlines():
+                    print(line)
+                    try:
+                        s = line
+                    except EOFError:
+                        break
+                    if not s: continue
+                    result = parser.parse(s)
+                    #print(result)
+                    return result
