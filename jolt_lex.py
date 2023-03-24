@@ -1,11 +1,28 @@
 # ------------------------------------------------------------
-#Jolt Programming Language
+# Jolt Programming Language
 #Jada Bailey & Garcian Mairs
 # ------------------------------------------------------------
 import ply.lex as lex
 
 # List of token names.   This is always required
-tokens = (
+
+reserved = {
+   'ef' : 'EF',
+   'den' : 'DEN',
+   'efnot' : 'EFNOT',
+   'oref' : 'OREF',
+   'mumba':'Numba',
+   'deci':'Deci',
+   'wud':'Wud',
+   'letta':'Letta',
+   'show' : 'SHOW',
+   'function' : 'FUNCTION'
+}
+
+tokens = [
+
+    'IDENTIFIER',
+
     #Literals
    'NUMBA',
    'DECI',
@@ -18,9 +35,8 @@ tokens = (
    'MINUS',
    'TIMES',
    'DIVIDE',
-   'MODULUS',
-   'INCREMENT',
-   'DECREMENT',
+#    'INCREMENT',
+#    'DECREMENT',
 
     #Logical Operators
    'AND',
@@ -44,22 +60,22 @@ tokens = (
    'CLOSEBRACE',
    'DOUBLE_LESS',
    'DOUBLE_GREATER',
-)
+] + list(reserved.values())
 
 #Regular Expressions for Tokens - Simple
+# t_INCREMENT  = r'\+\+'
+# t_DECREMENT  = r'\-\-'
 t_PLUS    = r'\+'
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
-t_MODULUS  = r'%'
-t_INCREMENT  = r'\+\+'
-t_DECREMENT  = r'\--'
 
-t_AND  = r'@'
+
+t_AND  = r'\@'
 t_OR  = r'\|'
 t_NOT  = r'\?'
 
-t_EQUAL    = r'\=='
+t_EQUAL    = r'\=\='
 t_NOT_EQUAL   = r'\?\='
 t_GREATER_THAN  = r'\>'
 t_LESS_THAN  = r'<'
@@ -67,7 +83,7 @@ t_GREATER_EQUAL  = r'\>='
 t_LESS_EQUAL  = r'\<='
 
 t_ASSIGNMENT    = r'\='
-t_END_LINE   = r'\.'
+t_END_LINE   = r'.'
 t_COLON  = r':'
 #t_COMMENT  = r'~.~*'  #'~.*~'  r'~.*~'
 t_DOUBLE_LESS  = r'\<<'
@@ -76,8 +92,13 @@ t_OPENBRACE  = r'\('
 t_CLOSEBRACE  = r'\)'
 
 #Regular Expressions for Tokens - Functions
+def t_IDENTIFIER(t):
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    t.type = reserved.get(t.value, "IDENTIFIER")
+    return t
+
 def t_DECI(t):
-    r'^\d+\.\d+$'
+    r'\d+\.\d+'
     t.value = float(t.value)
     return t
 
@@ -101,14 +122,14 @@ def t_WUD(t):
     return t
 
 def t_WHICHEVA(t):
-    r'True|False'
+    r'False' #Need to fix
     t.value = bool(t.value)
     return t
 
 def t_COMMENT(t):
     r'~.*~'
     t.value = t.value
-    return t
+    pass
 
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -120,13 +141,14 @@ t_ignore  = ' \t'
 
 # Error handling rule
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    print("\033[1;31mIllegal character: '%s' \033[0m" % t.value[0] )
     t.lexer.skip(1)
 
 # Build the lexer
 lexer = lex.lex()
 
-data = '~as A $$$ GIRL~'
+data = ''' False'''
+
 #'''3.1'''
 #check for 3 + 4 * 10 + - 20
 #epr + term
@@ -147,5 +169,3 @@ while True:
         break      # No more input
     #print(tok) #-prints token type, value, position
     print(tok.type,':', tok.value)
-
-
