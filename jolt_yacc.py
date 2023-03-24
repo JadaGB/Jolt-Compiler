@@ -162,8 +162,7 @@ def p_factor_expr(p):
 
 def p_if_statement(p):
     '''
-    if_statement : EF OPENBRACE expression CLOSEBRACE DEN \
-                   statement
+    if_statement : EF OPENBRACE expression CLOSEBRACE DEN statement
                  | EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
                  | EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
 
