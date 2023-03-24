@@ -1,5 +1,3 @@
-#Install Pygments- 'pip install pygments'
-
 from tkinter import *
 from pygments import highlight
 from pygments.lexers import PythonLexer

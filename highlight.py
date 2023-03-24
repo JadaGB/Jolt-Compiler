@@ -1,8 +1,7 @@
 from PyQt5.QtCore import QRegExp, Qt
 from PyQt5.QtGui import QColor, QTextCharFormat, QSyntaxHighlighter, QFont
-from PyQt5.QtWidgets import QApplication, QTextEdit
+from PyQt5.QtWidgets import QApplication, QTextEdit, QHBoxLayout, QFileDialog, QVBoxLayout
 from jolt_lex import reserved
-
 
 class MyHighlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
@@ -51,7 +50,49 @@ class MyEditor(QTextEdit):
         super(MyEditor, self).__init__(parent)
         self.highlighter = MyHighlighter(self.document())
 
+        self.setWindowTitle('Jolt IDE')
+        self.setGeometry(100, 100, 500, 500)
+
+        # Create the first QTextEdit widget
+        self.text_edit1 = QTextEdit(self)
+        self.text_edit1.setPlaceholderText('Enter some text here...')
+
+        # Create the second QTextEdit widget
+        self.text_edit2 = QTextEdit(self)
+        self.text_edit2.setPlaceholderText('Enter some more text here...')
+
+
+        def openFileNameDialog(self):
+            options = QFileDialog.Options()
+            options |= QFileDialog.DontUseNativeDialog
+            fileName, _ = QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;Python Files (*.py)", options=options)
+            if fileName:
+                print(fileName)
+    
+        def openFileNamesDialog(self):
+            options = QFileDialog.Options()
+            options |= QFileDialog.DontUseNativeDialog
+            files, _ = QFileDialog.getOpenFileNames(self,"QFileDialog.getOpenFileNames()", "","All Files (*);;Python Files (*.py)", options=options)
+            if files:
+                print(files)
+        
+        def saveFileDialog(self):
+            options = QFileDialog.Options()
+            options |= QFileDialog.DontUseNativeDialog
+            fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()","","All Files (*);;Text Files (*.txt)", options=options)
+            if fileName:
+                print(fileName)
+
+        # Create a layout and add the widgets to it
+        layout = QVBoxLayout()
+        layout.addWidget(self.text_edit1)
+        layout.addWidget(self.text_edit2)
+
+        # Set the layout for the window
+        self.setLayout(layout)
+
 if __name__ == '__main__':
+    # Create a widget and set its title
     app = QApplication([])
     editor = MyEditor()
     editor.show()
