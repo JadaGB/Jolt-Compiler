@@ -1,0 +1,1695 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    COLON
+    COMMENT
+    DOUBLE_GREATER
+    DOUBLE_LESS
+    Deci
+    END_LINE
+    FUNCTION
+    Letta
+    NOT
+    Numba
+    OR
+    Wud
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> statement
+Rule 2     statement -> expression
+Rule 3     statement -> if_statement
+Rule 4     statement -> assign
+Rule 5     statement -> print
+Rule 6     expression -> expression PLUS term
+Rule 7     expression -> expression MINUS term
+Rule 8     expression -> symbol
+Rule 9     symbol -> arithm_symbol
+Rule 10    symbol -> compar_symbol
+Rule 11    arithm_symbol -> PLUS
+Rule 12    arithm_symbol -> MINUS
+Rule 13    arithm_symbol -> DIVIDE
+Rule 14    arithm_symbol -> TIMES
+Rule 15    compar_symbol -> GREATER_THAN
+Rule 16    compar_symbol -> LESS_THAN
+Rule 17    compar_symbol -> EQUAL
+Rule 18    compar_symbol -> NOT_EQUAL
+Rule 19    compar_symbol -> GREATER_EQUAL
+Rule 20    compar_symbol -> LESS_EQUAL
+Rule 21    expression -> IDENTIFIER arithm_symbol term
+Rule 22    expression -> factor compar_symbol factor
+Rule 23    expression -> IDENTIFIER compar_symbol IDENTIFIER
+Rule 24    expression -> IDENTIFIER compar_symbol factor
+Rule 25    expression -> term
+Rule 26    term -> factor
+Rule 27    term -> factor arithm_symbol factor
+Rule 28    factor -> NUMBA
+Rule 29    factor -> DECI
+Rule 30    term -> IDENTIFIER
+Rule 31    factor -> OPENBRACE expression CLOSEBRACE
+Rule 32    if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement
+Rule 33    if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+Rule 34    if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+Rule 35    assign -> IDENTIFIER ASSIGNMENT NUMBA
+Rule 36    assign -> IDENTIFIER ASSIGNMENT DECI
+Rule 37    assign -> IDENTIFIER ASSIGNMENT WUD
+Rule 38    assign -> IDENTIFIER ASSIGNMENT LETTA
+Rule 39    assign -> IDENTIFIER ASSIGNMENT WHICHEVA
+Rule 40    assign -> IDENTIFIER ASSIGNMENT expression
+Rule 41    print -> SHOW OPENBRACE WUD CLOSEBRACE
+Rule 42    print -> SHOW OPENBRACE LETTA CLOSEBRACE
+Rule 43    print -> SHOW OPENBRACE IDENTIFIER CLOSEBRACE
+Rule 44    print -> SHOW OPENBRACE factor CLOSEBRACE
+
+Terminals, with rules where they appear
+
+AND                  : 
+ASSIGNMENT           : 35 36 37 38 39 40
+CLOSEBRACE           : 31 32 33 34 34 41 42 43 44
+COLON                : 
+COMMENT              : 
+DECI                 : 29 36
+DEN                  : 32 33 34 34
+DIVIDE               : 13
+DOUBLE_GREATER       : 
+DOUBLE_LESS          : 
+Deci                 : 
+EF                   : 32 33 34
+EFNOT                : 33 34
+END_LINE             : 
+EQUAL                : 17
+FUNCTION             : 
+GREATER_EQUAL        : 19
+GREATER_THAN         : 15
+IDENTIFIER           : 21 23 23 24 30 35 36 37 38 39 40 43
+LESS_EQUAL           : 20
+LESS_THAN            : 16
+LETTA                : 38 42
+Letta                : 
+MINUS                : 7 12
+NOT                  : 
+NOT_EQUAL            : 18
+NUMBA                : 28 35
+Numba                : 
+OPENBRACE            : 31 32 33 34 34 41 42 43 44
+OR                   : 
+OREF                 : 34
+PLUS                 : 6 11
+SHOW                 : 41 42 43 44
+TIMES                : 14
+WHICHEVA             : 39
+WUD                  : 37 41
+Wud                  : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+arithm_symbol        : 9 21 27
+assign               : 4
+compar_symbol        : 10 22 23 24
+expression           : 2 6 7 31 32 33 34 34 40
+factor               : 22 22 24 26 27 27 44
+if_statement         : 3
+print                : 5
+program              : 0
+statement            : 1 32 33 33 34 34 34
+symbol               : 8
+term                 : 6 7 21 25
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . statement
+    (2) statement -> . expression
+    (3) statement -> . if_statement
+    (4) statement -> . assign
+    (5) statement -> . print
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (32) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement
+    (33) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (34) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (35) assign -> . IDENTIFIER ASSIGNMENT NUMBA
+    (36) assign -> . IDENTIFIER ASSIGNMENT DECI
+    (37) assign -> . IDENTIFIER ASSIGNMENT WUD
+    (38) assign -> . IDENTIFIER ASSIGNMENT LETTA
+    (39) assign -> . IDENTIFIER ASSIGNMENT WHICHEVA
+    (40) assign -> . IDENTIFIER ASSIGNMENT expression
+    (41) print -> . SHOW OPENBRACE WUD CLOSEBRACE
+    (42) print -> . SHOW OPENBRACE LETTA CLOSEBRACE
+    (43) print -> . SHOW OPENBRACE IDENTIFIER CLOSEBRACE
+    (44) print -> . SHOW OPENBRACE factor CLOSEBRACE
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    IDENTIFIER      shift and go to state 11
+    EF              shift and go to state 15
+    SHOW            shift and go to state 19
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    program                        shift and go to state 1
+    statement                      shift and go to state 2
+    expression                     shift and go to state 3
+    if_statement                   shift and go to state 4
+    assign                         shift and go to state 5
+    print                          shift and go to state 6
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> statement .
+
+    $end            reduce using rule 1 (program -> statement .)
+
+
+state 3
+
+    (2) statement -> expression .
+    (6) expression -> expression . PLUS term
+    (7) expression -> expression . MINUS term
+
+    $end            reduce using rule 2 (statement -> expression .)
+    EFNOT           reduce using rule 2 (statement -> expression .)
+    OREF            reduce using rule 2 (statement -> expression .)
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 29
+
+
+state 4
+
+    (3) statement -> if_statement .
+
+    $end            reduce using rule 3 (statement -> if_statement .)
+    EFNOT           reduce using rule 3 (statement -> if_statement .)
+    OREF            reduce using rule 3 (statement -> if_statement .)
+
+
+state 5
+
+    (4) statement -> assign .
+
+    $end            reduce using rule 4 (statement -> assign .)
+    EFNOT           reduce using rule 4 (statement -> assign .)
+    OREF            reduce using rule 4 (statement -> assign .)
+
+
+state 6
+
+    (5) statement -> print .
+
+    $end            reduce using rule 5 (statement -> print .)
+    EFNOT           reduce using rule 5 (statement -> print .)
+    OREF            reduce using rule 5 (statement -> print .)
+
+
+state 7
+
+    (11) arithm_symbol -> PLUS .
+
+    PLUS            reduce using rule 11 (arithm_symbol -> PLUS .)
+    MINUS           reduce using rule 11 (arithm_symbol -> PLUS .)
+    $end            reduce using rule 11 (arithm_symbol -> PLUS .)
+    IDENTIFIER      reduce using rule 11 (arithm_symbol -> PLUS .)
+    NUMBA           reduce using rule 11 (arithm_symbol -> PLUS .)
+    DECI            reduce using rule 11 (arithm_symbol -> PLUS .)
+    OPENBRACE       reduce using rule 11 (arithm_symbol -> PLUS .)
+    CLOSEBRACE      reduce using rule 11 (arithm_symbol -> PLUS .)
+    EFNOT           reduce using rule 11 (arithm_symbol -> PLUS .)
+    OREF            reduce using rule 11 (arithm_symbol -> PLUS .)
+
+
+state 8
+
+    (25) expression -> term .
+
+    PLUS            reduce using rule 25 (expression -> term .)
+    MINUS           reduce using rule 25 (expression -> term .)
+    $end            reduce using rule 25 (expression -> term .)
+    CLOSEBRACE      reduce using rule 25 (expression -> term .)
+    EFNOT           reduce using rule 25 (expression -> term .)
+    OREF            reduce using rule 25 (expression -> term .)
+
+
+state 9
+
+    (12) arithm_symbol -> MINUS .
+
+    PLUS            reduce using rule 12 (arithm_symbol -> MINUS .)
+    MINUS           reduce using rule 12 (arithm_symbol -> MINUS .)
+    $end            reduce using rule 12 (arithm_symbol -> MINUS .)
+    IDENTIFIER      reduce using rule 12 (arithm_symbol -> MINUS .)
+    NUMBA           reduce using rule 12 (arithm_symbol -> MINUS .)
+    DECI            reduce using rule 12 (arithm_symbol -> MINUS .)
+    OPENBRACE       reduce using rule 12 (arithm_symbol -> MINUS .)
+    CLOSEBRACE      reduce using rule 12 (arithm_symbol -> MINUS .)
+    EFNOT           reduce using rule 12 (arithm_symbol -> MINUS .)
+    OREF            reduce using rule 12 (arithm_symbol -> MINUS .)
+
+
+state 10
+
+    (8) expression -> symbol .
+
+    PLUS            reduce using rule 8 (expression -> symbol .)
+    MINUS           reduce using rule 8 (expression -> symbol .)
+    $end            reduce using rule 8 (expression -> symbol .)
+    CLOSEBRACE      reduce using rule 8 (expression -> symbol .)
+    EFNOT           reduce using rule 8 (expression -> symbol .)
+    OREF            reduce using rule 8 (expression -> symbol .)
+
+
+state 11
+
+    (21) expression -> IDENTIFIER . arithm_symbol term
+    (23) expression -> IDENTIFIER . compar_symbol IDENTIFIER
+    (24) expression -> IDENTIFIER . compar_symbol factor
+    (35) assign -> IDENTIFIER . ASSIGNMENT NUMBA
+    (36) assign -> IDENTIFIER . ASSIGNMENT DECI
+    (37) assign -> IDENTIFIER . ASSIGNMENT WUD
+    (38) assign -> IDENTIFIER . ASSIGNMENT LETTA
+    (39) assign -> IDENTIFIER . ASSIGNMENT WHICHEVA
+    (40) assign -> IDENTIFIER . ASSIGNMENT expression
+    (30) term -> IDENTIFIER .
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    ASSIGNMENT      shift and go to state 32
+    $end            reduce using rule 30 (term -> IDENTIFIER .)
+    EFNOT           reduce using rule 30 (term -> IDENTIFIER .)
+    OREF            reduce using rule 30 (term -> IDENTIFIER .)
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+  ! PLUS            [ reduce using rule 30 (term -> IDENTIFIER .) ]
+  ! MINUS           [ reduce using rule 30 (term -> IDENTIFIER .) ]
+
+    arithm_symbol                  shift and go to state 30
+    compar_symbol                  shift and go to state 31
+
+state 12
+
+    (9) symbol -> arithm_symbol .
+
+    PLUS            reduce using rule 9 (symbol -> arithm_symbol .)
+    MINUS           reduce using rule 9 (symbol -> arithm_symbol .)
+    $end            reduce using rule 9 (symbol -> arithm_symbol .)
+    CLOSEBRACE      reduce using rule 9 (symbol -> arithm_symbol .)
+    EFNOT           reduce using rule 9 (symbol -> arithm_symbol .)
+    OREF            reduce using rule 9 (symbol -> arithm_symbol .)
+
+
+state 13
+
+    (22) expression -> factor . compar_symbol factor
+    (26) term -> factor .
+    (27) term -> factor . arithm_symbol factor
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    $end            reduce using rule 26 (term -> factor .)
+    CLOSEBRACE      reduce using rule 26 (term -> factor .)
+    EFNOT           reduce using rule 26 (term -> factor .)
+    OREF            reduce using rule 26 (term -> factor .)
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+
+  ! PLUS            [ reduce using rule 26 (term -> factor .) ]
+  ! MINUS           [ reduce using rule 26 (term -> factor .) ]
+
+    compar_symbol                  shift and go to state 33
+    arithm_symbol                  shift and go to state 34
+
+state 14
+
+    (10) symbol -> compar_symbol .
+
+    PLUS            reduce using rule 10 (symbol -> compar_symbol .)
+    MINUS           reduce using rule 10 (symbol -> compar_symbol .)
+    $end            reduce using rule 10 (symbol -> compar_symbol .)
+    CLOSEBRACE      reduce using rule 10 (symbol -> compar_symbol .)
+    EFNOT           reduce using rule 10 (symbol -> compar_symbol .)
+    OREF            reduce using rule 10 (symbol -> compar_symbol .)
+
+
+state 15
+
+    (32) if_statement -> EF . OPENBRACE expression CLOSEBRACE DEN statement
+    (33) if_statement -> EF . OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (34) if_statement -> EF . OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+
+    OPENBRACE       shift and go to state 35
+
+
+state 16
+
+    (31) factor -> OPENBRACE . expression CLOSEBRACE
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    IDENTIFIER      shift and go to state 37
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    expression                     shift and go to state 36
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 17
+
+    (28) factor -> NUMBA .
+
+    GREATER_THAN    reduce using rule 28 (factor -> NUMBA .)
+    LESS_THAN       reduce using rule 28 (factor -> NUMBA .)
+    EQUAL           reduce using rule 28 (factor -> NUMBA .)
+    NOT_EQUAL       reduce using rule 28 (factor -> NUMBA .)
+    GREATER_EQUAL   reduce using rule 28 (factor -> NUMBA .)
+    LESS_EQUAL      reduce using rule 28 (factor -> NUMBA .)
+    PLUS            reduce using rule 28 (factor -> NUMBA .)
+    MINUS           reduce using rule 28 (factor -> NUMBA .)
+    DIVIDE          reduce using rule 28 (factor -> NUMBA .)
+    TIMES           reduce using rule 28 (factor -> NUMBA .)
+    $end            reduce using rule 28 (factor -> NUMBA .)
+    CLOSEBRACE      reduce using rule 28 (factor -> NUMBA .)
+    EFNOT           reduce using rule 28 (factor -> NUMBA .)
+    OREF            reduce using rule 28 (factor -> NUMBA .)
+
+
+state 18
+
+    (29) factor -> DECI .
+
+    GREATER_THAN    reduce using rule 29 (factor -> DECI .)
+    LESS_THAN       reduce using rule 29 (factor -> DECI .)
+    EQUAL           reduce using rule 29 (factor -> DECI .)
+    NOT_EQUAL       reduce using rule 29 (factor -> DECI .)
+    GREATER_EQUAL   reduce using rule 29 (factor -> DECI .)
+    LESS_EQUAL      reduce using rule 29 (factor -> DECI .)
+    PLUS            reduce using rule 29 (factor -> DECI .)
+    MINUS           reduce using rule 29 (factor -> DECI .)
+    DIVIDE          reduce using rule 29 (factor -> DECI .)
+    TIMES           reduce using rule 29 (factor -> DECI .)
+    $end            reduce using rule 29 (factor -> DECI .)
+    CLOSEBRACE      reduce using rule 29 (factor -> DECI .)
+    EFNOT           reduce using rule 29 (factor -> DECI .)
+    OREF            reduce using rule 29 (factor -> DECI .)
+
+
+state 19
+
+    (41) print -> SHOW . OPENBRACE WUD CLOSEBRACE
+    (42) print -> SHOW . OPENBRACE LETTA CLOSEBRACE
+    (43) print -> SHOW . OPENBRACE IDENTIFIER CLOSEBRACE
+    (44) print -> SHOW . OPENBRACE factor CLOSEBRACE
+
+    OPENBRACE       shift and go to state 38
+
+
+state 20
+
+    (13) arithm_symbol -> DIVIDE .
+
+    PLUS            reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    MINUS           reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    $end            reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    IDENTIFIER      reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    NUMBA           reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    DECI            reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    OPENBRACE       reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    CLOSEBRACE      reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    EFNOT           reduce using rule 13 (arithm_symbol -> DIVIDE .)
+    OREF            reduce using rule 13 (arithm_symbol -> DIVIDE .)
+
+
+state 21
+
+    (14) arithm_symbol -> TIMES .
+
+    PLUS            reduce using rule 14 (arithm_symbol -> TIMES .)
+    MINUS           reduce using rule 14 (arithm_symbol -> TIMES .)
+    $end            reduce using rule 14 (arithm_symbol -> TIMES .)
+    IDENTIFIER      reduce using rule 14 (arithm_symbol -> TIMES .)
+    NUMBA           reduce using rule 14 (arithm_symbol -> TIMES .)
+    DECI            reduce using rule 14 (arithm_symbol -> TIMES .)
+    OPENBRACE       reduce using rule 14 (arithm_symbol -> TIMES .)
+    CLOSEBRACE      reduce using rule 14 (arithm_symbol -> TIMES .)
+    EFNOT           reduce using rule 14 (arithm_symbol -> TIMES .)
+    OREF            reduce using rule 14 (arithm_symbol -> TIMES .)
+
+
+state 22
+
+    (15) compar_symbol -> GREATER_THAN .
+
+    PLUS            reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    MINUS           reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    $end            reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    IDENTIFIER      reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    NUMBA           reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    DECI            reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    OPENBRACE       reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    CLOSEBRACE      reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    EFNOT           reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+    OREF            reduce using rule 15 (compar_symbol -> GREATER_THAN .)
+
+
+state 23
+
+    (16) compar_symbol -> LESS_THAN .
+
+    PLUS            reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    MINUS           reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    $end            reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    IDENTIFIER      reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    NUMBA           reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    DECI            reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    OPENBRACE       reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    CLOSEBRACE      reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    EFNOT           reduce using rule 16 (compar_symbol -> LESS_THAN .)
+    OREF            reduce using rule 16 (compar_symbol -> LESS_THAN .)
+
+
+state 24
+
+    (17) compar_symbol -> EQUAL .
+
+    PLUS            reduce using rule 17 (compar_symbol -> EQUAL .)
+    MINUS           reduce using rule 17 (compar_symbol -> EQUAL .)
+    $end            reduce using rule 17 (compar_symbol -> EQUAL .)
+    IDENTIFIER      reduce using rule 17 (compar_symbol -> EQUAL .)
+    NUMBA           reduce using rule 17 (compar_symbol -> EQUAL .)
+    DECI            reduce using rule 17 (compar_symbol -> EQUAL .)
+    OPENBRACE       reduce using rule 17 (compar_symbol -> EQUAL .)
+    CLOSEBRACE      reduce using rule 17 (compar_symbol -> EQUAL .)
+    EFNOT           reduce using rule 17 (compar_symbol -> EQUAL .)
+    OREF            reduce using rule 17 (compar_symbol -> EQUAL .)
+
+
+state 25
+
+    (18) compar_symbol -> NOT_EQUAL .
+
+    PLUS            reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    MINUS           reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    $end            reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    IDENTIFIER      reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    NUMBA           reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    DECI            reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    OPENBRACE       reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    CLOSEBRACE      reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    EFNOT           reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+    OREF            reduce using rule 18 (compar_symbol -> NOT_EQUAL .)
+
+
+state 26
+
+    (19) compar_symbol -> GREATER_EQUAL .
+
+    PLUS            reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    MINUS           reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    $end            reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    IDENTIFIER      reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    NUMBA           reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    DECI            reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    OPENBRACE       reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    CLOSEBRACE      reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    EFNOT           reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+    OREF            reduce using rule 19 (compar_symbol -> GREATER_EQUAL .)
+
+
+state 27
+
+    (20) compar_symbol -> LESS_EQUAL .
+
+    PLUS            reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    MINUS           reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    $end            reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    IDENTIFIER      reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    NUMBA           reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    DECI            reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    OPENBRACE       reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    CLOSEBRACE      reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    EFNOT           reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+    OREF            reduce using rule 20 (compar_symbol -> LESS_EQUAL .)
+
+
+state 28
+
+    (6) expression -> expression PLUS . term
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+
+    IDENTIFIER      shift and go to state 41
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+
+    term                           shift and go to state 39
+    factor                         shift and go to state 40
+
+state 29
+
+    (7) expression -> expression MINUS . term
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+
+    IDENTIFIER      shift and go to state 41
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+
+    term                           shift and go to state 42
+    factor                         shift and go to state 40
+
+state 30
+
+    (21) expression -> IDENTIFIER arithm_symbol . term
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+
+    IDENTIFIER      shift and go to state 41
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+
+    term                           shift and go to state 43
+    factor                         shift and go to state 40
+
+state 31
+
+    (23) expression -> IDENTIFIER compar_symbol . IDENTIFIER
+    (24) expression -> IDENTIFIER compar_symbol . factor
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+
+    IDENTIFIER      shift and go to state 44
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+
+    factor                         shift and go to state 45
+
+state 32
+
+    (35) assign -> IDENTIFIER ASSIGNMENT . NUMBA
+    (36) assign -> IDENTIFIER ASSIGNMENT . DECI
+    (37) assign -> IDENTIFIER ASSIGNMENT . WUD
+    (38) assign -> IDENTIFIER ASSIGNMENT . LETTA
+    (39) assign -> IDENTIFIER ASSIGNMENT . WHICHEVA
+    (40) assign -> IDENTIFIER ASSIGNMENT . expression
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    NUMBA           shift and go to state 46
+    DECI            shift and go to state 47
+    WUD             shift and go to state 48
+    LETTA           shift and go to state 49
+    WHICHEVA        shift and go to state 50
+    IDENTIFIER      shift and go to state 37
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    expression                     shift and go to state 51
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 33
+
+    (22) expression -> factor compar_symbol . factor
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+
+    factor                         shift and go to state 52
+
+state 34
+
+    (27) term -> factor arithm_symbol . factor
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+
+    factor                         shift and go to state 53
+
+state 35
+
+    (32) if_statement -> EF OPENBRACE . expression CLOSEBRACE DEN statement
+    (33) if_statement -> EF OPENBRACE . expression CLOSEBRACE DEN statement EFNOT statement
+    (34) if_statement -> EF OPENBRACE . expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    IDENTIFIER      shift and go to state 37
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    expression                     shift and go to state 54
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 36
+
+    (31) factor -> OPENBRACE expression . CLOSEBRACE
+    (6) expression -> expression . PLUS term
+    (7) expression -> expression . MINUS term
+
+    CLOSEBRACE      shift and go to state 55
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 29
+
+
+state 37
+
+    (21) expression -> IDENTIFIER . arithm_symbol term
+    (23) expression -> IDENTIFIER . compar_symbol IDENTIFIER
+    (24) expression -> IDENTIFIER . compar_symbol factor
+    (30) term -> IDENTIFIER .
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    CLOSEBRACE      reduce using rule 30 (term -> IDENTIFIER .)
+    $end            reduce using rule 30 (term -> IDENTIFIER .)
+    EFNOT           reduce using rule 30 (term -> IDENTIFIER .)
+    OREF            reduce using rule 30 (term -> IDENTIFIER .)
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+  ! PLUS            [ reduce using rule 30 (term -> IDENTIFIER .) ]
+  ! MINUS           [ reduce using rule 30 (term -> IDENTIFIER .) ]
+
+    arithm_symbol                  shift and go to state 30
+    compar_symbol                  shift and go to state 31
+
+state 38
+
+    (41) print -> SHOW OPENBRACE . WUD CLOSEBRACE
+    (42) print -> SHOW OPENBRACE . LETTA CLOSEBRACE
+    (43) print -> SHOW OPENBRACE . IDENTIFIER CLOSEBRACE
+    (44) print -> SHOW OPENBRACE . factor CLOSEBRACE
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+
+    WUD             shift and go to state 56
+    LETTA           shift and go to state 57
+    IDENTIFIER      shift and go to state 58
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+
+    factor                         shift and go to state 59
+
+state 39
+
+    (6) expression -> expression PLUS term .
+
+    PLUS            reduce using rule 6 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 6 (expression -> expression PLUS term .)
+    $end            reduce using rule 6 (expression -> expression PLUS term .)
+    CLOSEBRACE      reduce using rule 6 (expression -> expression PLUS term .)
+    EFNOT           reduce using rule 6 (expression -> expression PLUS term .)
+    OREF            reduce using rule 6 (expression -> expression PLUS term .)
+
+
+state 40
+
+    (26) term -> factor .
+    (27) term -> factor . arithm_symbol factor
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    $end            reduce using rule 26 (term -> factor .)
+    CLOSEBRACE      reduce using rule 26 (term -> factor .)
+    EFNOT           reduce using rule 26 (term -> factor .)
+    OREF            reduce using rule 26 (term -> factor .)
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+
+  ! PLUS            [ reduce using rule 26 (term -> factor .) ]
+  ! MINUS           [ reduce using rule 26 (term -> factor .) ]
+
+    arithm_symbol                  shift and go to state 34
+
+state 41
+
+    (30) term -> IDENTIFIER .
+
+    PLUS            reduce using rule 30 (term -> IDENTIFIER .)
+    MINUS           reduce using rule 30 (term -> IDENTIFIER .)
+    $end            reduce using rule 30 (term -> IDENTIFIER .)
+    CLOSEBRACE      reduce using rule 30 (term -> IDENTIFIER .)
+    EFNOT           reduce using rule 30 (term -> IDENTIFIER .)
+    OREF            reduce using rule 30 (term -> IDENTIFIER .)
+
+
+state 42
+
+    (7) expression -> expression MINUS term .
+
+    PLUS            reduce using rule 7 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 7 (expression -> expression MINUS term .)
+    $end            reduce using rule 7 (expression -> expression MINUS term .)
+    CLOSEBRACE      reduce using rule 7 (expression -> expression MINUS term .)
+    EFNOT           reduce using rule 7 (expression -> expression MINUS term .)
+    OREF            reduce using rule 7 (expression -> expression MINUS term .)
+
+
+state 43
+
+    (21) expression -> IDENTIFIER arithm_symbol term .
+
+    PLUS            reduce using rule 21 (expression -> IDENTIFIER arithm_symbol term .)
+    MINUS           reduce using rule 21 (expression -> IDENTIFIER arithm_symbol term .)
+    $end            reduce using rule 21 (expression -> IDENTIFIER arithm_symbol term .)
+    CLOSEBRACE      reduce using rule 21 (expression -> IDENTIFIER arithm_symbol term .)
+    EFNOT           reduce using rule 21 (expression -> IDENTIFIER arithm_symbol term .)
+    OREF            reduce using rule 21 (expression -> IDENTIFIER arithm_symbol term .)
+
+
+state 44
+
+    (23) expression -> IDENTIFIER compar_symbol IDENTIFIER .
+
+    PLUS            reduce using rule 23 (expression -> IDENTIFIER compar_symbol IDENTIFIER .)
+    MINUS           reduce using rule 23 (expression -> IDENTIFIER compar_symbol IDENTIFIER .)
+    $end            reduce using rule 23 (expression -> IDENTIFIER compar_symbol IDENTIFIER .)
+    CLOSEBRACE      reduce using rule 23 (expression -> IDENTIFIER compar_symbol IDENTIFIER .)
+    EFNOT           reduce using rule 23 (expression -> IDENTIFIER compar_symbol IDENTIFIER .)
+    OREF            reduce using rule 23 (expression -> IDENTIFIER compar_symbol IDENTIFIER .)
+
+
+state 45
+
+    (24) expression -> IDENTIFIER compar_symbol factor .
+
+    PLUS            reduce using rule 24 (expression -> IDENTIFIER compar_symbol factor .)
+    MINUS           reduce using rule 24 (expression -> IDENTIFIER compar_symbol factor .)
+    $end            reduce using rule 24 (expression -> IDENTIFIER compar_symbol factor .)
+    CLOSEBRACE      reduce using rule 24 (expression -> IDENTIFIER compar_symbol factor .)
+    EFNOT           reduce using rule 24 (expression -> IDENTIFIER compar_symbol factor .)
+    OREF            reduce using rule 24 (expression -> IDENTIFIER compar_symbol factor .)
+
+
+state 46
+
+    (35) assign -> IDENTIFIER ASSIGNMENT NUMBA .
+    (28) factor -> NUMBA .
+
+  ! reduce/reduce conflict for $end resolved using rule 28 (factor -> NUMBA .)
+  ! reduce/reduce conflict for EFNOT resolved using rule 28 (factor -> NUMBA .)
+  ! reduce/reduce conflict for OREF resolved using rule 28 (factor -> NUMBA .)
+    GREATER_THAN    reduce using rule 28 (factor -> NUMBA .)
+    LESS_THAN       reduce using rule 28 (factor -> NUMBA .)
+    EQUAL           reduce using rule 28 (factor -> NUMBA .)
+    NOT_EQUAL       reduce using rule 28 (factor -> NUMBA .)
+    GREATER_EQUAL   reduce using rule 28 (factor -> NUMBA .)
+    LESS_EQUAL      reduce using rule 28 (factor -> NUMBA .)
+    PLUS            reduce using rule 28 (factor -> NUMBA .)
+    MINUS           reduce using rule 28 (factor -> NUMBA .)
+    DIVIDE          reduce using rule 28 (factor -> NUMBA .)
+    TIMES           reduce using rule 28 (factor -> NUMBA .)
+    $end            reduce using rule 28 (factor -> NUMBA .)
+    EFNOT           reduce using rule 28 (factor -> NUMBA .)
+    OREF            reduce using rule 28 (factor -> NUMBA .)
+
+  ! $end            [ reduce using rule 35 (assign -> IDENTIFIER ASSIGNMENT NUMBA .) ]
+  ! EFNOT           [ reduce using rule 35 (assign -> IDENTIFIER ASSIGNMENT NUMBA .) ]
+  ! OREF            [ reduce using rule 35 (assign -> IDENTIFIER ASSIGNMENT NUMBA .) ]
+
+
+state 47
+
+    (36) assign -> IDENTIFIER ASSIGNMENT DECI .
+    (29) factor -> DECI .
+
+  ! reduce/reduce conflict for $end resolved using rule 29 (factor -> DECI .)
+  ! reduce/reduce conflict for EFNOT resolved using rule 29 (factor -> DECI .)
+  ! reduce/reduce conflict for OREF resolved using rule 29 (factor -> DECI .)
+    GREATER_THAN    reduce using rule 29 (factor -> DECI .)
+    LESS_THAN       reduce using rule 29 (factor -> DECI .)
+    EQUAL           reduce using rule 29 (factor -> DECI .)
+    NOT_EQUAL       reduce using rule 29 (factor -> DECI .)
+    GREATER_EQUAL   reduce using rule 29 (factor -> DECI .)
+    LESS_EQUAL      reduce using rule 29 (factor -> DECI .)
+    PLUS            reduce using rule 29 (factor -> DECI .)
+    MINUS           reduce using rule 29 (factor -> DECI .)
+    DIVIDE          reduce using rule 29 (factor -> DECI .)
+    TIMES           reduce using rule 29 (factor -> DECI .)
+    $end            reduce using rule 29 (factor -> DECI .)
+    EFNOT           reduce using rule 29 (factor -> DECI .)
+    OREF            reduce using rule 29 (factor -> DECI .)
+
+  ! $end            [ reduce using rule 36 (assign -> IDENTIFIER ASSIGNMENT DECI .) ]
+  ! EFNOT           [ reduce using rule 36 (assign -> IDENTIFIER ASSIGNMENT DECI .) ]
+  ! OREF            [ reduce using rule 36 (assign -> IDENTIFIER ASSIGNMENT DECI .) ]
+
+
+state 48
+
+    (37) assign -> IDENTIFIER ASSIGNMENT WUD .
+
+    $end            reduce using rule 37 (assign -> IDENTIFIER ASSIGNMENT WUD .)
+    EFNOT           reduce using rule 37 (assign -> IDENTIFIER ASSIGNMENT WUD .)
+    OREF            reduce using rule 37 (assign -> IDENTIFIER ASSIGNMENT WUD .)
+
+
+state 49
+
+    (38) assign -> IDENTIFIER ASSIGNMENT LETTA .
+
+    $end            reduce using rule 38 (assign -> IDENTIFIER ASSIGNMENT LETTA .)
+    EFNOT           reduce using rule 38 (assign -> IDENTIFIER ASSIGNMENT LETTA .)
+    OREF            reduce using rule 38 (assign -> IDENTIFIER ASSIGNMENT LETTA .)
+
+
+state 50
+
+    (39) assign -> IDENTIFIER ASSIGNMENT WHICHEVA .
+
+    $end            reduce using rule 39 (assign -> IDENTIFIER ASSIGNMENT WHICHEVA .)
+    EFNOT           reduce using rule 39 (assign -> IDENTIFIER ASSIGNMENT WHICHEVA .)
+    OREF            reduce using rule 39 (assign -> IDENTIFIER ASSIGNMENT WHICHEVA .)
+
+
+state 51
+
+    (40) assign -> IDENTIFIER ASSIGNMENT expression .
+    (6) expression -> expression . PLUS term
+    (7) expression -> expression . MINUS term
+
+    $end            reduce using rule 40 (assign -> IDENTIFIER ASSIGNMENT expression .)
+    EFNOT           reduce using rule 40 (assign -> IDENTIFIER ASSIGNMENT expression .)
+    OREF            reduce using rule 40 (assign -> IDENTIFIER ASSIGNMENT expression .)
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 29
+
+
+state 52
+
+    (22) expression -> factor compar_symbol factor .
+
+    PLUS            reduce using rule 22 (expression -> factor compar_symbol factor .)
+    MINUS           reduce using rule 22 (expression -> factor compar_symbol factor .)
+    $end            reduce using rule 22 (expression -> factor compar_symbol factor .)
+    CLOSEBRACE      reduce using rule 22 (expression -> factor compar_symbol factor .)
+    EFNOT           reduce using rule 22 (expression -> factor compar_symbol factor .)
+    OREF            reduce using rule 22 (expression -> factor compar_symbol factor .)
+
+
+state 53
+
+    (27) term -> factor arithm_symbol factor .
+
+    PLUS            reduce using rule 27 (term -> factor arithm_symbol factor .)
+    MINUS           reduce using rule 27 (term -> factor arithm_symbol factor .)
+    $end            reduce using rule 27 (term -> factor arithm_symbol factor .)
+    CLOSEBRACE      reduce using rule 27 (term -> factor arithm_symbol factor .)
+    EFNOT           reduce using rule 27 (term -> factor arithm_symbol factor .)
+    OREF            reduce using rule 27 (term -> factor arithm_symbol factor .)
+
+
+state 54
+
+    (32) if_statement -> EF OPENBRACE expression . CLOSEBRACE DEN statement
+    (33) if_statement -> EF OPENBRACE expression . CLOSEBRACE DEN statement EFNOT statement
+    (34) if_statement -> EF OPENBRACE expression . CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (6) expression -> expression . PLUS term
+    (7) expression -> expression . MINUS term
+
+    CLOSEBRACE      shift and go to state 60
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 29
+
+
+state 55
+
+    (31) factor -> OPENBRACE expression CLOSEBRACE .
+
+    GREATER_THAN    reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    LESS_THAN       reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    EQUAL           reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    NOT_EQUAL       reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    GREATER_EQUAL   reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    LESS_EQUAL      reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    PLUS            reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    MINUS           reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    DIVIDE          reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    TIMES           reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    $end            reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    CLOSEBRACE      reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    EFNOT           reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+    OREF            reduce using rule 31 (factor -> OPENBRACE expression CLOSEBRACE .)
+
+
+state 56
+
+    (41) print -> SHOW OPENBRACE WUD . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 61
+
+
+state 57
+
+    (42) print -> SHOW OPENBRACE LETTA . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 62
+
+
+state 58
+
+    (43) print -> SHOW OPENBRACE IDENTIFIER . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 63
+
+
+state 59
+
+    (44) print -> SHOW OPENBRACE factor . CLOSEBRACE
+
+    CLOSEBRACE      shift and go to state 64
+
+
+state 60
+
+    (32) if_statement -> EF OPENBRACE expression CLOSEBRACE . DEN statement
+    (33) if_statement -> EF OPENBRACE expression CLOSEBRACE . DEN statement EFNOT statement
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE . DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+
+    DEN             shift and go to state 65
+
+
+state 61
+
+    (41) print -> SHOW OPENBRACE WUD CLOSEBRACE .
+
+    $end            reduce using rule 41 (print -> SHOW OPENBRACE WUD CLOSEBRACE .)
+    EFNOT           reduce using rule 41 (print -> SHOW OPENBRACE WUD CLOSEBRACE .)
+    OREF            reduce using rule 41 (print -> SHOW OPENBRACE WUD CLOSEBRACE .)
+
+
+state 62
+
+    (42) print -> SHOW OPENBRACE LETTA CLOSEBRACE .
+
+    $end            reduce using rule 42 (print -> SHOW OPENBRACE LETTA CLOSEBRACE .)
+    EFNOT           reduce using rule 42 (print -> SHOW OPENBRACE LETTA CLOSEBRACE .)
+    OREF            reduce using rule 42 (print -> SHOW OPENBRACE LETTA CLOSEBRACE .)
+
+
+state 63
+
+    (43) print -> SHOW OPENBRACE IDENTIFIER CLOSEBRACE .
+
+    $end            reduce using rule 43 (print -> SHOW OPENBRACE IDENTIFIER CLOSEBRACE .)
+    EFNOT           reduce using rule 43 (print -> SHOW OPENBRACE IDENTIFIER CLOSEBRACE .)
+    OREF            reduce using rule 43 (print -> SHOW OPENBRACE IDENTIFIER CLOSEBRACE .)
+
+
+state 64
+
+    (44) print -> SHOW OPENBRACE factor CLOSEBRACE .
+
+    $end            reduce using rule 44 (print -> SHOW OPENBRACE factor CLOSEBRACE .)
+    EFNOT           reduce using rule 44 (print -> SHOW OPENBRACE factor CLOSEBRACE .)
+    OREF            reduce using rule 44 (print -> SHOW OPENBRACE factor CLOSEBRACE .)
+
+
+state 65
+
+    (32) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN . statement
+    (33) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN . statement EFNOT statement
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN . statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (2) statement -> . expression
+    (3) statement -> . if_statement
+    (4) statement -> . assign
+    (5) statement -> . print
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (32) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement
+    (33) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (34) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (35) assign -> . IDENTIFIER ASSIGNMENT NUMBA
+    (36) assign -> . IDENTIFIER ASSIGNMENT DECI
+    (37) assign -> . IDENTIFIER ASSIGNMENT WUD
+    (38) assign -> . IDENTIFIER ASSIGNMENT LETTA
+    (39) assign -> . IDENTIFIER ASSIGNMENT WHICHEVA
+    (40) assign -> . IDENTIFIER ASSIGNMENT expression
+    (41) print -> . SHOW OPENBRACE WUD CLOSEBRACE
+    (42) print -> . SHOW OPENBRACE LETTA CLOSEBRACE
+    (43) print -> . SHOW OPENBRACE IDENTIFIER CLOSEBRACE
+    (44) print -> . SHOW OPENBRACE factor CLOSEBRACE
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    IDENTIFIER      shift and go to state 11
+    EF              shift and go to state 15
+    SHOW            shift and go to state 19
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    expression                     shift and go to state 3
+    statement                      shift and go to state 66
+    if_statement                   shift and go to state 4
+    assign                         shift and go to state 5
+    print                          shift and go to state 6
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 66
+
+    (32) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement .
+    (33) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement . EFNOT statement
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement . OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+
+  ! shift/reduce conflict for EFNOT resolved as shift
+  ! shift/reduce conflict for OREF resolved as shift
+    $end            reduce using rule 32 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement .)
+    EFNOT           shift and go to state 67
+    OREF            shift and go to state 68
+
+  ! EFNOT           [ reduce using rule 32 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement .) ]
+  ! OREF            [ reduce using rule 32 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement .) ]
+
+
+state 67
+
+    (33) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT . statement
+    (2) statement -> . expression
+    (3) statement -> . if_statement
+    (4) statement -> . assign
+    (5) statement -> . print
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (32) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement
+    (33) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (34) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (35) assign -> . IDENTIFIER ASSIGNMENT NUMBA
+    (36) assign -> . IDENTIFIER ASSIGNMENT DECI
+    (37) assign -> . IDENTIFIER ASSIGNMENT WUD
+    (38) assign -> . IDENTIFIER ASSIGNMENT LETTA
+    (39) assign -> . IDENTIFIER ASSIGNMENT WHICHEVA
+    (40) assign -> . IDENTIFIER ASSIGNMENT expression
+    (41) print -> . SHOW OPENBRACE WUD CLOSEBRACE
+    (42) print -> . SHOW OPENBRACE LETTA CLOSEBRACE
+    (43) print -> . SHOW OPENBRACE IDENTIFIER CLOSEBRACE
+    (44) print -> . SHOW OPENBRACE factor CLOSEBRACE
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    IDENTIFIER      shift and go to state 11
+    EF              shift and go to state 15
+    SHOW            shift and go to state 19
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    expression                     shift and go to state 3
+    statement                      shift and go to state 69
+    if_statement                   shift and go to state 4
+    assign                         shift and go to state 5
+    print                          shift and go to state 6
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 68
+
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF . OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+
+    OPENBRACE       shift and go to state 70
+
+
+state 69
+
+    (33) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement .
+
+    $end            reduce using rule 33 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement .)
+    EFNOT           reduce using rule 33 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement .)
+    OREF            reduce using rule 33 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement .)
+
+
+state 70
+
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE . expression CLOSEBRACE DEN statement EFNOT statement
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    IDENTIFIER      shift and go to state 37
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    expression                     shift and go to state 71
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 71
+
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression . CLOSEBRACE DEN statement EFNOT statement
+    (6) expression -> expression . PLUS term
+    (7) expression -> expression . MINUS term
+
+    CLOSEBRACE      shift and go to state 72
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 29
+
+
+state 72
+
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE . DEN statement EFNOT statement
+
+    DEN             shift and go to state 73
+
+
+state 73
+
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN . statement EFNOT statement
+    (2) statement -> . expression
+    (3) statement -> . if_statement
+    (4) statement -> . assign
+    (5) statement -> . print
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (32) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement
+    (33) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (34) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (35) assign -> . IDENTIFIER ASSIGNMENT NUMBA
+    (36) assign -> . IDENTIFIER ASSIGNMENT DECI
+    (37) assign -> . IDENTIFIER ASSIGNMENT WUD
+    (38) assign -> . IDENTIFIER ASSIGNMENT LETTA
+    (39) assign -> . IDENTIFIER ASSIGNMENT WHICHEVA
+    (40) assign -> . IDENTIFIER ASSIGNMENT expression
+    (41) print -> . SHOW OPENBRACE WUD CLOSEBRACE
+    (42) print -> . SHOW OPENBRACE LETTA CLOSEBRACE
+    (43) print -> . SHOW OPENBRACE IDENTIFIER CLOSEBRACE
+    (44) print -> . SHOW OPENBRACE factor CLOSEBRACE
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    IDENTIFIER      shift and go to state 11
+    EF              shift and go to state 15
+    SHOW            shift and go to state 19
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    expression                     shift and go to state 3
+    statement                      shift and go to state 74
+    if_statement                   shift and go to state 4
+    assign                         shift and go to state 5
+    print                          shift and go to state 6
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 74
+
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement . EFNOT statement
+
+    EFNOT           shift and go to state 75
+
+
+state 75
+
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT . statement
+    (2) statement -> . expression
+    (3) statement -> . if_statement
+    (4) statement -> . assign
+    (5) statement -> . print
+    (6) expression -> . expression PLUS term
+    (7) expression -> . expression MINUS term
+    (8) expression -> . symbol
+    (21) expression -> . IDENTIFIER arithm_symbol term
+    (22) expression -> . factor compar_symbol factor
+    (23) expression -> . IDENTIFIER compar_symbol IDENTIFIER
+    (24) expression -> . IDENTIFIER compar_symbol factor
+    (25) expression -> . term
+    (32) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement
+    (33) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (34) if_statement -> . EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
+    (35) assign -> . IDENTIFIER ASSIGNMENT NUMBA
+    (36) assign -> . IDENTIFIER ASSIGNMENT DECI
+    (37) assign -> . IDENTIFIER ASSIGNMENT WUD
+    (38) assign -> . IDENTIFIER ASSIGNMENT LETTA
+    (39) assign -> . IDENTIFIER ASSIGNMENT WHICHEVA
+    (40) assign -> . IDENTIFIER ASSIGNMENT expression
+    (41) print -> . SHOW OPENBRACE WUD CLOSEBRACE
+    (42) print -> . SHOW OPENBRACE LETTA CLOSEBRACE
+    (43) print -> . SHOW OPENBRACE IDENTIFIER CLOSEBRACE
+    (44) print -> . SHOW OPENBRACE factor CLOSEBRACE
+    (9) symbol -> . arithm_symbol
+    (10) symbol -> . compar_symbol
+    (28) factor -> . NUMBA
+    (29) factor -> . DECI
+    (31) factor -> . OPENBRACE expression CLOSEBRACE
+    (26) term -> . factor
+    (27) term -> . factor arithm_symbol factor
+    (30) term -> . IDENTIFIER
+    (11) arithm_symbol -> . PLUS
+    (12) arithm_symbol -> . MINUS
+    (13) arithm_symbol -> . DIVIDE
+    (14) arithm_symbol -> . TIMES
+    (15) compar_symbol -> . GREATER_THAN
+    (16) compar_symbol -> . LESS_THAN
+    (17) compar_symbol -> . EQUAL
+    (18) compar_symbol -> . NOT_EQUAL
+    (19) compar_symbol -> . GREATER_EQUAL
+    (20) compar_symbol -> . LESS_EQUAL
+
+    IDENTIFIER      shift and go to state 11
+    EF              shift and go to state 15
+    SHOW            shift and go to state 19
+    NUMBA           shift and go to state 17
+    DECI            shift and go to state 18
+    OPENBRACE       shift and go to state 16
+    PLUS            shift and go to state 7
+    MINUS           shift and go to state 9
+    DIVIDE          shift and go to state 20
+    TIMES           shift and go to state 21
+    GREATER_THAN    shift and go to state 22
+    LESS_THAN       shift and go to state 23
+    EQUAL           shift and go to state 24
+    NOT_EQUAL       shift and go to state 25
+    GREATER_EQUAL   shift and go to state 26
+    LESS_EQUAL      shift and go to state 27
+
+    expression                     shift and go to state 3
+    statement                      shift and go to state 76
+    if_statement                   shift and go to state 4
+    assign                         shift and go to state 5
+    print                          shift and go to state 6
+    term                           shift and go to state 8
+    symbol                         shift and go to state 10
+    arithm_symbol                  shift and go to state 12
+    factor                         shift and go to state 13
+    compar_symbol                  shift and go to state 14
+
+state 76
+
+    (34) if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement .
+
+    $end            reduce using rule 34 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement .)
+    EFNOT           reduce using rule 34 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement .)
+    OREF            reduce using rule 34 (if_statement -> EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 11 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 11 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 13 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 13 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 37 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 37 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 40 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 40 resolved as shift
+WARNING: shift/reduce conflict for EFNOT in state 66 resolved as shift
+WARNING: shift/reduce conflict for OREF in state 66 resolved as shift
+WARNING: reduce/reduce conflict in state 46 resolved using rule (factor -> NUMBA)
+WARNING: rejected rule (assign -> IDENTIFIER ASSIGNMENT NUMBA) in state 46
+WARNING: reduce/reduce conflict in state 47 resolved using rule (factor -> DECI)
+WARNING: rejected rule (assign -> IDENTIFIER ASSIGNMENT DECI) in state 47
+WARNING: Rule (assign -> IDENTIFIER ASSIGNMENT NUMBA) is never reduced
+WARNING: Rule (assign -> IDENTIFIER ASSIGNMENT DECI) is never reduced

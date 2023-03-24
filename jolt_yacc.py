@@ -271,56 +271,56 @@ def parseifileinput(file):
 
 print('                                 JOLT COMPILER')
 print('_______________________________________________________________________________')
-parser = yacc.yacc()
-while True:
-    try:
-        print("1. Compile .jolt file")
-        print("2. Write source code from scratch")
-        print("3. Exit")
+# parser = yacc.yacc()
+# while True:
+#     try:
+#         print("1. Compile .jolt file")
+#         print("2. Write source code from scratch")
+#         print("3. Exit")
             
-        option = input("Menu Option: ")
+#         option = input("Menu Option: ")
 
-        if option == "1":
-            with open(filepath, 'r') as f:
-                while True:
-                    for line in f.readlines():
-                        print(line)
-                        try:
-                            s = line
-                        except EOFError:
-                            break
-                        if not s: continue
-                        result = parser.parse(s)
-                    print("Output: ",result)
-                    break
-        elif option == "2":
-                lines = 1
-                print('_______________________________________________________________________________')
-                # print("Enter filename to save source code (or # to skip saving): ")
-                # filename = input("Enter filename to save source code (or # to skip saving): ")
-                # if filename == "#":
-                #     break
-                while True:
-                    try:
-                        #s = input(f'{lines}| Jolt >> ')
-                        s = input(f'{lines}| ')
-                    except EOFError:
-                        break
-                    if not s: continue
-                    result = parser.parse(s)
-                    print(result)
-                    lines = lines + 1
-        elif option == "3":
-                print("Thanks For Using Jolt Compiler!")
-                break
-        else:
-                print("Invalid choice. Please try again.")
-    except ZeroDivisionError:
-        print("\033[1;31mZero Division Error: Cannot divide by zero! \033[0m")
-    else:
-        continue
-    finally:
-        print("_______________________________________________________________________________")
+#         if option == "1":
+#             with open(filepath, 'r') as f:
+#                 while True:
+#                     for line in f.readlines():
+#                         print(line)
+#                         try:
+#                             s = line
+#                         except EOFError:
+#                             break
+#                         if not s: continue
+#                         result = parser.parse(s)
+#                     print("Output: ",result)
+#                     break
+#         elif option == "2":
+#                 lines = 1
+#                 print('_______________________________________________________________________________')
+#                 # print("Enter filename to save source code (or # to skip saving): ")
+#                 # filename = input("Enter filename to save source code (or # to skip saving): ")
+#                 # if filename == "#":
+#                 #     break
+#                 while True:
+#                     try:
+#                         #s = input(f'{lines}| Jolt >> ')
+#                         s = input(f'{lines}| ')
+#                     except EOFError:
+#                         break
+#                     if not s: continue
+#                     result = parser.parse(s)
+#                     print(result)
+#                     lines = lines + 1
+#         elif option == "3":
+#                 print("Thanks For Using Jolt Compiler!")
+#                 break
+#         else:
+#                 print("Invalid choice. Please try again.")
+#     except ZeroDivisionError:
+#         print("\033[1;31mZero Division Error: Cannot divide by zero! \033[0m")
+#     else:
+#         continue
+#     finally:
+#         print("_______________________________________________________________________________")
 #      try:
 #        s = input('Jolt >> ')
 #    except EOFError:
