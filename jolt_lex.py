@@ -138,6 +138,7 @@ def t_newline(t):
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
+#t_ignore_COMMENT = r'\~.*\~'
 
 # Error handling rule
 def t_error(t):
