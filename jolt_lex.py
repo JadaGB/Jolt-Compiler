@@ -147,7 +147,7 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-data = ''' False'''
+data = ''' '''
 
 #'''3.1'''
 #check for 3 + 4 * 10 + - 20
