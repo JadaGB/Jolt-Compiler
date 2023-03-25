@@ -76,8 +76,10 @@ class IDE(QMainWindow):
         layout = QVBoxLayout(main_widget)
 
         self.textEdit = QTextEdit()
-        self.textEdit.setStyleSheet("background-color: #262626")
-        self.textEdit.setFont(QFont('Arial', 10))
+        # self.textEdit.setTextColor()
+        # .setStyleSheet("color: #00008b")
+        self.textEdit.setStyleSheet("background-color: #262626;color: #4874f4")
+        self.textEdit.setFont(QFont('Arial', 14))
         self.textEdit.setGeometry(0, 0, 400, 600)
         layout.addWidget(self.textEdit)
 

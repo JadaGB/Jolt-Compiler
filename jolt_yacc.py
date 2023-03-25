@@ -11,6 +11,9 @@ import sys
 
 # Dictionary to store variables and their values.
 variables = {}
+error_messages = {
+    'syntax_error': 'Invalid IF statement at line {0}, token {1}'
+}
 
 def p_program(p):
     'program : statement'
@@ -28,8 +31,7 @@ def p_statement(p):
 def p_expression_plus(p):
     '''expression : expression PLUS term '''
     p[0] = p[1] + p[3]
-    
-    p[0] = p[1] + p[3]
+
 def p_expression_minus(p):
     'expression : expression MINUS term'
     p[0] = p[1] - p[3]
@@ -89,8 +91,10 @@ def p_expression_comparison(p):
         p[0] = p[1] != p[3] 
     elif p[2] == '>=':
         p[0] = p[1] >= p[3]
-    else:
+    elif p[2] == '<=':
         p[0] = p[1] <= p[3]
+    else:
+        raise SyntaxError(error_messages['syntax_error'].format(tokens.lineno, tokens.value))
 
 def p_expression_comparison2(p):
     '''
@@ -175,13 +179,16 @@ def p_if_statement(p):
             p[0] = p[6]  # Execute the consequent statement
         else:
            p[0] =  p[8]  # Execute the alternative statement
-    else:
+    elif len(p) == 15:
         if p[3]:
             p[0] = p[6]  # Execute the consequent statement
         elif p[9]:
             p[0] =  p[12]
         else:
             p[0]  = p[14]
+    else:
+        raise SyntaxError(error_messages['syntax_error'].format(tokens.lineno, tokens.value))
+            
 
 def p_assign(p):
     '''
@@ -242,7 +249,7 @@ def parseInput(content):
             s = lines
             # print(lines)
             result = parser.parse(s)
-            if result != "":
+            if result != "" and result != "None":
                 results.append(result)
             # print(results)
         return results
