@@ -11,25 +11,42 @@ class MyHighlighter(QSyntaxHighlighter):
         self.highlighting_rules = []
         
         keyword_format = QTextCharFormat()
-        keyword_format.setForeground(Qt.blue)
-        keyword_format.setFontWeight(QFont.Bold)
+        keyword_format.setForeground(QColor('#9370DB'))
+        #keyword_format.setFontWeight(QFont.Bold)
         keywords = reserved #['if', 'else', 'for', 'while']
         for word in keywords:
             pattern = QRegExp("\\b" + word + "\\b")
             self.highlighting_rules.append((pattern, keyword_format))
         
         literal_format = QTextCharFormat()
-        literal_format.setForeground(Qt.darkGreen)
+        literal_format.setForeground(QColor(173,216,230))
         pattern = QRegExp("\\b[0-9]+\\b")
         self.highlighting_rules.append((pattern, literal_format))
         
         operator_format = QTextCharFormat()
-        operator_format.setForeground(Qt.red)
+        operator_format.setForeground(QColor(255,140,0))
         opertors =  ['+', '-', '*', '/', '%', '=', '==','<', '>','>=','<=', '?=', '?', '|', '@']
         for op in opertors:
             pattern = QRegExp("\\" + op)
             self.highlighting_rules.append((pattern, operator_format))
         
+        bracket_format = QTextCharFormat()
+        bracket_format.setForeground(QColor(255,200,0))
+        bracket = ['(',')']
+        for b in bracket:
+            pattern = QRegExp("\\" + b)
+            self.highlighting_rules.append((pattern, bracket_format))
+        
+        # identifier_format = QTextCharFormat()
+        # identifier_format.setForeground(QColor(0,0,139))
+        # pattern = QRegExp("\\b[a-zA-Z_][a-zA-Z0-9_]*\\b")
+        # self.highlighting_rules.append((pattern, identifier_format))
+        # for i in keywords:
+        #         self.highlighting_rules.append((pattern, keyword_format))
+        
+                
+        
+
         comment_format = QTextCharFormat()
         comment_format.setForeground(Qt.gray)
         pattern = QRegExp("~.*~")
@@ -59,6 +76,8 @@ class IDE(QMainWindow):
         layout = QVBoxLayout(main_widget)
 
         self.textEdit = QTextEdit()
+        self.textEdit.setStyleSheet("background-color: #262626")
+        self.textEdit.setFont(QFont('Arial', 10))
         self.textEdit.setGeometry(0, 0, 400, 600)
         layout.addWidget(self.textEdit)
 
