@@ -11,9 +11,12 @@ import sys
 
 # Dictionary to store variables and their values.
 variables = {}
-error_messages = {
-    'syntax_error': 'Invalid IF statement at line {0}, token {1}'
-}
+error = []
+
+precedence = (
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIVIDE'),
+)
 
 def p_program(p):
     'program : statement'
@@ -29,17 +32,35 @@ def p_statement(p):
 
 #brawta
 def p_expression_plus(p):
-    '''expression : expression PLUS term '''
-    p[0] = p[1] + p[3]
+    '''expression : expression arithm_symbol term
+                  | expression error term'''
+    print("\033[1;31mInvalid Arithmetic Statement.\033[0m")
+    try:
+        if p[2] == '*':
+            p[0] = p[1] + p[3]
+        elif p[2] == '/':
+            p[0] = p[1] - p[3]
+        elif p[2] == '+':
+            p[0] = p[1] * p[3]
+        elif p[2] == '-':
+            if p[3] == 0:
+                raise ZeroDivisionError()
+            else:
+                p[0] = p[1] / p[3]
+    except ZeroDivisionError:
+        print("Cannot divide by zero.")
+    # try:
+    #     p[0] = p[1] + p[3]
+    except TypeError:
+        print("\033[1;31mExpected Numba or Deci.\033[0m")
 
-def p_expression_minus(p):
-    'expression : expression MINUS term'
-    p[0] = p[1] - p[3]
+# def p_expression_minus(p):
+#     '''expression : expression MINUS term'''
+#     try:
+#         p[0] = p[1] - p[3]
+#     except TypeError:
+#         print("\033[1;31mExpected Numba or Deci.\033[0m")
 #end of brawa
-
-# def p_statement_func(p):
-#     ''' function : FUNCTION IDENTIFIER OPENBRACE CLOSEBRACE
-#                  | FUNCTION IDENTIFIER OPENBRACE CLOSEBRACE'''
 
 def p_expression_symbol(p):
     ''' expression : symbol'''
@@ -68,19 +89,31 @@ def p_symbol_comparison(p):
     p[0] = p[1]
 
 def p_expression_withidentifier(p):
-    '''expression : IDENTIFIER arithm_symbol term'''
-    if p[2] == '+':
-        p[0] = variables[p[1]] + p[3]
-    elif p[2] == '-':
-        p[0] = variables[p[1]] - p[3]
-    elif p[2] == '/':
-        p[0] = variables[p[1]] / p[3]
-    else:
-        p[0] = variables[p[1]] * p[3]
+    '''expression : IDENTIFIER arithm_symbol term
+                  | IDENTIFIER error term'''
+    print("\033[1;31mInvalid Arithmetic Statement.\033[0m")
+    # brawta
+    # if p[0] in reserved:
+    #         print("CANNOT")
+    try:
+        if p[2] == '+':
+            p[0] = variables[p[1]] + p[3]
+        elif p[2] == '-':
+            p[0] = variables[p[1]] - p[3]
+        elif p[2] == '*':
+            p[0] = variables[p[1]] * p[3]
+        elif p[2] == '/':
+            if p[3] == 0:
+                raise ZeroDivisionError()
+            else:
+                p[0] = variables[p[1]] / p[3]
+    except ZeroDivisionError:
+        print("Cannot divide by zero.")
 
 def p_expression_comparison(p):
     '''
-    expression : factor compar_symbol factor '''
+    expression : factor compar_symbol factor
+               | factor error factor'''
     if p[2] == '>':
         p[0] = p[1] > p[3]
     elif p[2] == '<':
@@ -94,12 +127,14 @@ def p_expression_comparison(p):
     elif p[2] == '<=':
         p[0] = p[1] <= p[3]
     else:
-        raise SyntaxError(error_messages['syntax_error'].format(tokens.lineno, tokens.value))
+        print("\033[1;31mInvalid Comparison Statement.\033[0m")
 
 def p_expression_comparison2(p):
     '''
     expression : IDENTIFIER compar_symbol IDENTIFIER
-               | IDENTIFIER compar_symbol factor '''
+               | IDENTIFIER compar_symbol factor
+               | IDENTIFIER error factor
+               | IDENTIFIER error IDENTIFIER'''
     
     if p[3] in variables:
         if p[2] == '>':
@@ -112,8 +147,10 @@ def p_expression_comparison2(p):
             p[0] = variables[p[1]] != variables[p[3]]
         elif p[2] == '>=':
             p[0] = variables[p[1]] >= variables[p[3]]
-        else:
+        elif p[2] == '<=':
             p[0] = variables[p[1]] <= variables[p[3]]
+        else:
+            print("\033[1;31mInvalid Comparison Statement.\033[0m")
     else:
         if p[2] == '>':
             p[0] = variables[p[1]] > p[3]
@@ -125,8 +162,10 @@ def p_expression_comparison2(p):
             p[0] = variables[p[1]] != p[3] 
         elif p[2] == '>=':
             p[0] = variables[p[1]] >= p[3]
-        else:
+        elif p[2] == '<=':
             p[0] = variables[p[1]] <= p[3]
+        else:
+            print("\033[1;31mInvalid Comparison Statement.\033[0m")
 
 def p_expression_term(p):
     'expression : term'
@@ -167,10 +206,12 @@ def p_factor_expr(p):
 def p_if_statement(p):
     '''
     if_statement : EF OPENBRACE expression CLOSEBRACE DEN statement
+                 | EF error expression CLOSEBRACE DEN statement
                  | EF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
                  | EF OPENBRACE expression CLOSEBRACE DEN statement OREF OPENBRACE expression CLOSEBRACE DEN statement EFNOT statement
-
     '''
+    print("\033[1;31mInvalid IF Statement.\033[0m") 
+
     if len(p) == 7:  # If there is no else clause
         if p[3]:
             p[0] = p[6]  # Execute the consequent statement
@@ -179,15 +220,15 @@ def p_if_statement(p):
             p[0] = p[6]  # Execute the consequent statement
         else:
            p[0] =  p[8]  # Execute the alternative statement
-    elif len(p) == 15:
+    else:
         if p[3]:
             p[0] = p[6]  # Execute the consequent statement
         elif p[9]:
             p[0] =  p[12]
         else:
             p[0]  = p[14]
-    else:
-        raise SyntaxError(error_messages['syntax_error'].format(tokens.lineno, tokens.value))
+    # else:
+    #     raise SyntaxError(error_messages['syntax_error'].format(tokens.lineno, tokens.value))
             
 
 def p_assign(p):
@@ -208,31 +249,36 @@ def p_assign(p):
 def p_print_show(p):
     '''
     print : SHOW OPENBRACE WUD CLOSEBRACE
+          | SHOW error WUD CLOSEBRACE
           | SHOW OPENBRACE LETTA CLOSEBRACE
           | SHOW OPENBRACE IDENTIFIER CLOSEBRACE
     '''
+    print("\033[1;31mInvalid Show Statement.\033[0m")
+
     if p[3] in variables:
         p[0] = variables[p[3]]
     else:
         p[0] = p[3].strip('"')
-
+        
 def p_print_show2(p):
     '''
     print : SHOW OPENBRACE factor CLOSEBRACE
     '''   
     p[0] = p[3]
-
+    
 # def p_expression_logical(p):
 #     '''
 #     expression : expression AND expression
 #                | expression OR expression
 #                | expression NOT expression
 #     '''
+# precedence = (
+#     ('left', 'PLUS', 'MINUS'),
+#     ('left', 'TIMES', 'DIVIDE'),
+# )
 
 def p_error(p):
-    print("\033[1;31m Syntax Error: Input invalid \033[0m")
-    # print("Syntax Error: Input invalid")
-    print(f"Syntax error at line {p.lineno}: {p.value}")
+    print(f"\033[1;31mSyntax Error at Line {p.lineno}: {p.value} \033[0m")
 
 # Build the parser
 # parser = yacc.yacc()

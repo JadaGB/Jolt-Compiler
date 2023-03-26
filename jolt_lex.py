@@ -62,6 +62,7 @@ tokens = [
    'DOUBLE_GREATER',
 ] + list(reserved.values())
 
+
 #Regular Expressions for Tokens - Simple
 # t_INCREMENT  = r'\+\+'
 # t_DECREMENT  = r'\-\-'
@@ -91,6 +92,10 @@ t_DOUBLE_GREATER  = r'\>>'
 t_OPENBRACE  = r'\('
 t_CLOSEBRACE  = r'\)'
 
+# precedence = (
+#     ('left', 'PLUS', 'MINUS'),
+#     ('left', 'TIMES', 'DIVIDE'),
+# )
 #Regular Expressions for Tokens - Functions
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
@@ -139,6 +144,10 @@ def t_newline(t):
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
+# precedence = (
+#     ('left', 'PLUS', 'MINUS'),
+#     ('left', 'TIMES', 'DIVIDE'),
+# )
 # Error handling rule
 def t_error(t):
     print("\033[1;31mIllegal character: '%s' \033[0m" % t.value[0] )
@@ -147,7 +156,7 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-data = ''' '''
+data = ''''''
 
 #'''3.1'''
 #check for 3 + 4 * 10 + - 20
