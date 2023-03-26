@@ -19,6 +19,23 @@ reserved = {
    'function' : 'FUNCTION'
 }
 
+arithmetic_op =[
+    'PLUS',
+   'MINUS',
+   'TIMES',
+   'DIVIDE',
+]
+
+conditional_op = [
+    #Comparative/Conditional Operators
+   'EQUAL',
+   'NOT_EQUAL',
+   'GREATER_THAN',
+   'LESS_THAN',
+   'GREATER_EQUAL',
+   'LESS_EQUAL',
+]
+
 tokens = [
 
     'IDENTIFIER',
@@ -31,10 +48,10 @@ tokens = [
    'WHICHEVA',
 
     #Arithmetic Operators
-   'PLUS',
-   'MINUS',
-   'TIMES',
-   'DIVIDE',
+#    'PLUS',
+#    'MINUS',
+#    'TIMES',
+#    'DIVIDE',
 #    'INCREMENT',
 #    'DECREMENT',
 
@@ -43,13 +60,13 @@ tokens = [
    'OR',
    'NOT',
 
-   #Comparative/Conditional Operators
-   'EQUAL',
-   'NOT_EQUAL',
-   'GREATER_THAN',
-   'LESS_THAN',
-   'GREATER_EQUAL',
-   'LESS_EQUAL',
+#    #Comparative/Conditional Operators
+#    'EQUAL',
+#    'NOT_EQUAL',
+#    'GREATER_THAN',
+#    'LESS_THAN',
+#    'GREATER_EQUAL',
+#    'LESS_EQUAL',
 
    #Symbols
    'ASSIGNMENT',
@@ -61,7 +78,6 @@ tokens = [
    'DOUBLE_LESS',
    'DOUBLE_GREATER',
 ] + list(reserved.values())
-
 
 #Regular Expressions for Tokens - Simple
 # t_INCREMENT  = r'\+\+'
@@ -156,7 +172,7 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-data = ''''''
+data = ''' '''
 
 #'''3.1'''
 #check for 3 + 4 * 10 + - 20

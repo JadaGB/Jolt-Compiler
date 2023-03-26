@@ -11,12 +11,9 @@ import sys
 
 # Dictionary to store variables and their values.
 variables = {}
-error = []
-
-precedence = (
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'TIMES', 'DIVIDE'),
-)
+error_messages = {
+    'syntax_error': 'Invalid IF statement at line {0}, token {1}'
+}
 
 def p_program(p):
     'program : statement'
@@ -278,7 +275,9 @@ def p_print_show2(p):
 # )
 
 def p_error(p):
-    print(f"\033[1;31mSyntax Error at Line {p.lineno}: {p.value} \033[0m")
+    print("\033[1;31m Syntax Error: Input invalid \033[0m")
+    # print("Syntax Error: Input invalid")
+    print(f"Syntax error at line {p.lineno}: {p.value}")
 
 # Build the parser
 # parser = yacc.yacc()
