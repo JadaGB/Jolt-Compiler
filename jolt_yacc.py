@@ -12,7 +12,8 @@ import sys
 # Dictionary to store variables and their values.
 variables = {}
 error_messages = {
-    'syntax_error': 'Invalid IF statement at line {0}, token {1}'
+    'syntax_error': 'Invalid IF statement at line {0}, token {1}',
+    'conditional_error': 'Invalid conditional operator in line {0}, token{1}'
 }
 
 def p_program(p):
@@ -230,9 +231,14 @@ def p_print_show2(p):
 #     '''
 
 def p_error(p):
-    print("\033[1;31m Syntax Error: Input invalid \033[0m")
-    # print("Syntax Error: Input invalid")
-    print(f"Syntax error at line {p.lineno}: {p.value}")
+    # print("\033[1;31m Syntax Error: Input invalid \033[0m")
+    # # print("Syntax Error: Input invalid")
+    # print(f"Syntax error at line {p.lineno}: {p.value}")
+
+    if p not in arithmetic_op:
+        raise SyntaxError(error_messages['syntax_error'].format(p.lineno, p.value))
+    elif p not in conditional_op:
+        raise SyntaxError(error_messages['conditional_error'].format(p.lineno, p.value))
 
 # Build the parser
 # parser = yacc.yacc()
