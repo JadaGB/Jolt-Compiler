@@ -19,11 +19,17 @@ reserved = {
    'function' : 'FUNCTION'
 }
 
+digits=[
+     'NUMBA',
+     'DECI',
+]
+
 arithmetic_op =[
-    'PLUS',
+   'PLUS',
    'MINUS',
    'TIMES',
    'DIVIDE',
+   'MODULUS'
 ]
 
 conditional_op = [
@@ -39,34 +45,17 @@ conditional_op = [
 tokens = [
 
     'IDENTIFIER',
-
     #Literals
-   'NUMBA',
-   'DECI',
+#    'NUMBA',
+#    'DECI',
    'WUD',
    'LETTA',
    'WHICHEVA',
-
-    #Arithmetic Operators
-#    'PLUS',
-#    'MINUS',
-#    'TIMES',
-#    'DIVIDE',
-#    'INCREMENT',
-#    'DECREMENT',
 
     #Logical Operators
    'AND',
    'OR',
    'NOT',
-
-#    #Comparative/Conditional Operators
-#    'EQUAL',
-#    'NOT_EQUAL',
-#    'GREATER_THAN',
-#    'LESS_THAN',
-#    'GREATER_EQUAL',
-#    'LESS_EQUAL',
 
    #Symbols
    'ASSIGNMENT',
@@ -77,7 +66,7 @@ tokens = [
    'CLOSEBRACE',
    'DOUBLE_LESS',
    'DOUBLE_GREATER',
-] + list(reserved.values())
+] + list(reserved.values()) + arithmetic_op + conditional_op + digits
 
 #Regular Expressions for Tokens - Simple
 # t_INCREMENT  = r'\+\+'
@@ -86,7 +75,7 @@ t_PLUS    = r'\+'
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
-
+t_MODULUS = r'%'
 
 t_AND  = r'\@'
 t_OR  = r'\|'
@@ -100,18 +89,13 @@ t_GREATER_EQUAL  = r'\>='
 t_LESS_EQUAL  = r'\<='
 
 t_ASSIGNMENT    = r'\='
-t_END_LINE   = r'.'
-t_COLON  = r':'
-#t_COMMENT  = r'~.~*'  #'~.*~'  r'~.*~'
-t_DOUBLE_LESS  = r'\<<'
-t_DOUBLE_GREATER  = r'\>>'
+t_END_LINE   = r'\.'
 t_OPENBRACE  = r'\('
 t_CLOSEBRACE  = r'\)'
+t_DOUBLE_LESS = r'\<\<'
+t_DOUBLE_GREATER = r'\>\>'
 
-# precedence = (
-#     ('left', 'PLUS', 'MINUS'),
-#     ('left', 'TIMES', 'DIVIDE'),
-# )
+
 #Regular Expressions for Tokens - Functions
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
