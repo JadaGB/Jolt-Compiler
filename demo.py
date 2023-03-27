@@ -118,6 +118,7 @@ class IDE(QMainWindow):
         # Add a button widget
         self.button = QPushButton('Run', self)
         self.button.clicked.connect(self.run)
+        # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
         self.button.move(680, 3)
 
         self.highlighter = MyHighlighter(self.textEdit)
@@ -149,6 +150,7 @@ class IDE(QMainWindow):
         for line in output:
             self.output_editor.insertPlainText(str(line))
             self.output_editor.insertPlainText("\n")
+        # self.output_editor.clear()
         # return content
 
 if __name__ == '__main__':
