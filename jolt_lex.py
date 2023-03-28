@@ -1,20 +1,17 @@
 # ------------------------------------------------------------
 # Jolt Programming Language
-#Jada Bailey & Garcian Mairs
+# Jada Bailey & Garcian Mairs
 # ------------------------------------------------------------
 import ply.lex as lex
 
-# List of token names.   This is always required
-
+#List of Tokens
 reserved = {
    'ef' : 'EF',
    'den' : 'DEN',
    'efnot' : 'EFNOT',
    'oref' : 'OREF',
-   'numba':'numba',
-   'deci':'deci',
-   'wud':'wud',
-   'letta':'letta',
+   'wen'  : 'WEN',
+   'in' :'IN',
    'show' : 'SHOW',
 }
 
@@ -43,22 +40,14 @@ conditional_op = [
 
 tokens = [
 
-    'IDENTIFIER',
-    #Literals
-#    'NUMBA',
-#    'DECI',
+   'IDENTIFIER',
    'WUD',
    'LETTA',
    'WHICHEVA',
 
-    #Logical Operators
-   'AND',
-   'OR',
-   'NOT',
-
    #Symbols
+   'COMMA',
    'ASSIGNMENT',
-   'END_LINE',
    'COMMENT',
    'COLON',
    'OPENBRACE',
@@ -67,18 +56,11 @@ tokens = [
    'DOUBLE_GREATER',
 ] + list(reserved.values()) + arithmetic_op + conditional_op + digits
 
-#Regular Expressions for Tokens - Simple
-# t_INCREMENT  = r'\+\+'
-# t_DECREMENT  = r'\-\-'
 t_PLUS    = r'\+'
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
 t_DIVIDE  = r'/'
 t_MODULUS = r'%'
-
-t_AND  = r'\@'
-t_OR  = r'\|'
-t_NOT  = r'\?'
 
 t_EQUAL    = r'\=\='
 t_NOT_EQUAL   = r'\?\='
@@ -87,14 +69,13 @@ t_LESS_THAN  = r'<'
 t_GREATER_EQUAL  = r'\>='
 t_LESS_EQUAL  = r'\<='
 
+t_COMMA   = r'\,'
 t_COLON   = r'\:'
 t_ASSIGNMENT    = r'\='
-t_END_LINE   = r'\.'
 t_OPENBRACE  = r'\('
 t_CLOSEBRACE  = r'\)'
 t_DOUBLE_LESS = r'\<\<'
 t_DOUBLE_GREATER = r'\>\>'
-
 
 #Regular Expressions for Tokens - Functions
 def t_IDENTIFIER(t):
@@ -144,10 +125,6 @@ def t_newline(t):
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
-# precedence = (
-#     ('left', 'PLUS', 'MINUS'),
-#     ('left', 'TIMES', 'DIVIDE'),
-# )
 # Error handling rule
 def t_error(t):
     print("\033[1;31mIllegal character: '%s' \033[0m" % t.value[0] )
@@ -158,16 +135,6 @@ lexer = lex.lex()
 
 data = ''' '''
 
-#'''3.1'''
-#check for 3 + 4 * 10 + - 20
-#epr + term
-#term + term
-#factor + term
-#factor + term
-#factor + term * factor
-#factor + factor * factor
-#num + num+ num = syntax correct
-
 # Give the lexer some input
 lexer.input(data)
 
@@ -176,5 +143,4 @@ while True:
     tok = lexer.token()
     if not tok: 
         break      # No more input
-    #print(tok) #-prints token type, value, position
     print(tok.type,':', tok.value)
