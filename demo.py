@@ -65,11 +65,13 @@ class MyHighlighter(QSyntaxHighlighter):
                 index = expression.indexIn(text, index + length)
                 
 class IDE(QMainWindow):
+    pause = 0
     def __init__(self):
         super().__init__()
         self.initUI()
 
     def initUI(self):
+        
         #Create main widget and layout
         main_widget = QWidget(self)
         self.setCentralWidget(main_widget)
@@ -78,6 +80,7 @@ class IDE(QMainWindow):
         self.textEdit = QTextEdit()
         # self.textEdit.setTextColor()
         # .setStyleSheet("color: #00008b")
+        # self.textEdit.setText("~Hii~")
         self.textEdit.setStyleSheet("background-color: #262626;color: #4874f4")
         self.textEdit.setFont(QFont('Arial', 14))
         self.textEdit.setGeometry(0, 0, 400, 600)
@@ -116,6 +119,12 @@ class IDE(QMainWindow):
         fileMenu.addAction(exitAction)
 
         # Add a button widget
+        self.button = QPushButton('Compile', self)
+        self.button.clicked.connect(self.compile)
+        # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
+        self.button.move(570, 3)
+
+         # Add a button widget
         self.button = QPushButton('Run', self)
         self.button.clicked.connect(self.run)
         # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
@@ -142,6 +151,19 @@ class IDE(QMainWindow):
         if fileName:
             with open(fileName, 'w') as file:
                 file.write(self.textEdit.toPlainText())
+
+    def compile(self):
+        errors = 0
+        content = self.textEdit.toPlainText().splitlines()
+        output = parseInput(content)
+        self.output_editor.clear()
+        for line in output:
+            if "Error" in str(line):
+                errors = errors + 1
+                self.output_editor.insertPlainText(str(line))
+                self.output_editor.insertPlainText("\n")
+            else:
+                self.output_editor.insertPlainText("Compiled Successfully!")
 
     def run(self):
         content = self.textEdit.toPlainText().splitlines()
