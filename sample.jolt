@@ -1,6 +1,0 @@
-children = 10
-parents = 39
-pagerank = 0.25
-ef (pagerank <= 0.5) den 
-z = parents + children
-show(z)
