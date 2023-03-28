@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtCore import QRegExp, Qt
-from PyQt5.QtGui import QPixmap, QColor, QTextCharFormat, QSyntaxHighlighter, QFont
+from PyQt5.QtGui import QPixmap, QColor, QTextCharFormat, QSyntaxHighlighter, QFont, QIcon
 from PyQt5.QtWidgets import QLabel, QApplication, QMainWindow, QTextEdit, QAction, QFileDialog, QWidget,QVBoxLayout,QPushButton
 from jolt_yacc import *
 from jolt_lex import reserved
@@ -12,8 +12,8 @@ class MyHighlighter(QSyntaxHighlighter):
         
         keyword_format = QTextCharFormat()
         keyword_format.setForeground(QColor('#9370DB'))
-        #keyword_format.setFontWeight(QFont.Bold)
-        keywords = reserved #['if', 'else', 'for', 'while']
+        #get reserved words from lex
+        keywords = reserved 
         for word in keywords:
             pattern = QRegExp("\\b" + word + "\\b")
             self.highlighting_rules.append((pattern, keyword_format))
@@ -37,16 +37,6 @@ class MyHighlighter(QSyntaxHighlighter):
             pattern = QRegExp("\\" + b)
             self.highlighting_rules.append((pattern, bracket_format))
         
-        # identifier_format = QTextCharFormat()
-        # identifier_format.setForeground(QColor(0,0,139))
-        # pattern = QRegExp("\\b[a-zA-Z_][a-zA-Z0-9_]*\\b")
-        # self.highlighting_rules.append((pattern, identifier_format))
-        # for i in keywords:
-        #         self.highlighting_rules.append((pattern, keyword_format))
-        
-                
-        
-
         comment_format = QTextCharFormat()
         comment_format.setForeground(Qt.gray)
         pattern = QRegExp("~.*~")
@@ -76,31 +66,41 @@ class IDE(QMainWindow):
         self.welcome_widget = QWidget(self)
         self.setCentralWidget(self.welcome_widget)
         self.welcome_widget.setGeometry(150, 30, 100, 100)
-        self.welcome_widget.setStyleSheet("color: #4874f4")
+        self.welcome_widget.setStyleSheet("background-color: #6600cc")
         layout1 = QVBoxLayout(self.welcome_widget)
 
+        self.welcome_stmt = QLabel("WELCOME", self.welcome_widget)
+        self.welcome_stmt.setAlignment(Qt.AlignCenter)
+        self.welcome_stmt.move(500,550)
+        self.welcome_stmt.setFont(QFont('Verdana',32))
+        self.welcome_stmt.setStyleSheet("color: #ffffff")
+        layout1.addWidget(self.welcome_stmt) 
+
         logo = QLabel(self)
-        pixmap = QPixmap('jolt-logo.jpg')
+        # pixmap = QPixmap("logo1.png")
+        pixmap = QPixmap("C:/Users/river/Downloads/APL/APL/Jolt-Compiler/logo1.png")
+        pixmap = pixmap.scaled(400,400)
+        logo.setAlignment(Qt.AlignCenter)
         logo.setPixmap(pixmap)
-        logo.resize(200, 200)
         layout1.addWidget(logo)
 
-
-        self.welcome_stmt = QLabel("Jolt-Compiler V.1.0 \n Developed by Jada Bailey and Garcian Mairs", self.welcome_widget)
-        self.welcome_stmt.setAlignment(Qt.AlignCenter)
-        layout1.addWidget(self.welcome_stmt)
+        self.welcome_stmt1 = QLabel("Jolt-Compiler V.1.0 \n Developed by Jada Bailey and Garcian Mairs", self.welcome_widget)
+        self.welcome_stmt1.setAlignment(Qt.AlignCenter)
+        self.welcome_stmt1.setFont(QFont('Verdana',12))
+        self.welcome_stmt1.setStyleSheet("color: #ffffff")
+        layout1.addWidget(self.welcome_stmt1)
         
-        self.gotoeditor = QPushButton('Go To Compiler',self.welcome_widget )
+        self.gotoeditor = QPushButton('Go To Compiler',self.welcome_widget)
+        self.gotoeditor.setFont(QFont('Verdana',12))
+        self.gotoeditor.setStyleSheet("background-color: #ffffff;border-radius: 12px")
+        # self.gotoeditor.setStyleSheet("border-radius: 15px")
         self.gotoeditor.clicked.connect(self.showwindows)
-        self.gotoeditor.move(300,350)
-        self.gotoeditor.resize(200,30)
-        # layout1.addWidget(self.exbutton)
-       
-
-        #self.setLayout(layout1)
+        self.gotoeditor.move(300,400)
+        self.gotoeditor.resize(200,35)
 
         self.setGeometry(400, 100, 800, 600)
         self.setWindowTitle('Jolt IDE')
+        self.setWindowIcon(QIcon("C:/Users/river/Downloads/APL/APL/Jolt-Compiler/logo1.png"))
         self.show()
 
     def openFile(self):
@@ -149,12 +149,15 @@ class IDE(QMainWindow):
         #Create main widget and layout
         self.main_widget = QWidget(self)
         self.setCentralWidget(self.main_widget)
+        self.main_widget.setStyleSheet("background-color: #303030")
         layout = QVBoxLayout(self.main_widget)
 
         
         # create menu bar and file menu
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&File')
+        menubar.setStyleSheet("color: #ffffff")
+        menubar.setFont(QFont('Verdana', 10))
 
         # create file menu actions
         newFileAction = QAction('&New', self)
@@ -183,36 +186,36 @@ class IDE(QMainWindow):
         layout.addWidget(menubar)
 
         self.textEdit = QTextEdit()
-        # self.textEdit.setTextColor()
-        # .setStyleSheet("color: #00008b")
-        # self.textEdit.setText("~Hii~")
         self.textEdit.setStyleSheet("background-color: #262626;color: #4874f4")
-        self.textEdit.setFont(QFont('Arial', 14))
+        self.textEdit.setFont(QFont('Verdana', 12))
         self.textEdit.setGeometry(0, 0, 400, 600)
         layout.addWidget(self.textEdit)
 
-
         self.output_editor = QTextEdit()
+        self.output_editor.setStyleSheet("background-color: #E0BBE4; color: #000000")
+        self.output_editor.setFont(QFont('Verdana', 12))
         self.output_editor.setReadOnly(True)
         layout.addWidget(self.output_editor)
 
         # Add a button widget
         self.button = QPushButton('Compile', self.main_widget)
         self.button.clicked.connect(self.compile)
-        # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
+        self.button.setStyleSheet("background-color: #ff471a; color: #ffffff;border-radius: 8px")
+        self.button.setFont(QFont('Verdana',10))
         self.button.move(570, 3)
 
          # Add a button widget
         self.button = QPushButton('Run', self.main_widget)
+        self.button.setStyleSheet("background-color: #ff471a; color: #ffffff;border-radius: 8px")
+        self.button.setFont(QFont('Verdana',10))
         self.button.clicked.connect(self.run)
-        # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
         self.button.move(680, 3)
 
-        self.highlighter = MyHighlighter(self.textEdit)
-
+        #invoke syntax highlighting
+        self.highlighter = MyHighlighter(self.textEdit) 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ide = IDE()
-    ide.show()
+    ide.show() #displays widget
     sys.exit(app.exec_())
