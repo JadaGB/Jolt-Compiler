@@ -50,9 +50,9 @@ def p_expression_plus(p):
         elif p[2] == '%':
             p[0] = p[1] % p[3]
         elif p[2] in conditional_op: 
-            results.append("Unexpected Comparative Symbol!")
+            results.append("Error: Unexpected Comparative Symbol!")
         else:
-            results.append("Invalid Arithmetic Symbol!")
+            results.append("Error: Invalid Arithmetic Symbol!")
     except ZeroDivisionError:
         results.append("Zero Division Error: Cannot divide by zero.")
     except TypeError:
@@ -106,9 +106,9 @@ def p_expression_withidentifier(p):
             else:
                 p[0] = variables[p[1]] / p[3]
         elif p[2] in conditional_op: 
-            results.append("Unexpected Comparative Symbol!")
+            results.append("Error: Unexpected Comparative Symbol!")
         else:
-            results.append("Invalid Arithmetic Symbol!")
+            results.append("Error: Invalid Arithmetic Symbol!")
     except ZeroDivisionError:
         results.append("Zero Division Error: Cannot divide by zero.")
 
@@ -129,7 +129,7 @@ def p_expression_comparison(p):
     elif p[2] == '<=':
         p[0] = p[1] <= p[3]
     else:
-        results.append("Invalid Comparison Symbol!")
+        results.append("Error: Invalid Comparison Symbol!")
 
 def p_expression_comparison2(p):
     '''
@@ -152,7 +152,7 @@ def p_expression_comparison2(p):
         elif p[2] == '<=':
             p[0] = variables[p[1]] <= variables[p[3]]
         else:
-            results.append("Invalid Comparison Statement.")
+            results.append("Error: Invalid Comparison Statement.")
     else:
         if p[2] == '>':
             p[0] = variables[p[1]] > p[3]
@@ -167,11 +167,9 @@ def p_expression_comparison2(p):
         elif p[2] == '<=':
             p[0] = variables[p[1]] <= p[3]
         elif p[2] in conditional_op: 
-            results.append("Invalid Comparative Statement!")
+            results.append("Error: Invalid Comparative Statement!")
         else:
-            results.append("Unexpected Arithmetic Symbol!")
-        # else:
-        #     print("\033[1;31mInvalid Comparison Statement.\033[0m")
+            results.append("Error: Unexpected Arithmetic Symbol!")
 
 def p_expression_term(p):
     'expression : term'
@@ -234,7 +232,7 @@ def p_if_statement(p):
         else:
             p[0]  = p[15]
     else:
-        results.append("Invalid IF Statement.") 
+        results.append("Error: Invalid IF Statement.") 
     # else:
     #     raise SyntaxError(error_messages['syntax_error'].format(tokens.lineno, tokens.value))
             
@@ -302,29 +300,11 @@ def p_print_show2(p):
 def p_error(p):
     results.append("Syntax Error: Input invalid")
     if p is None:
-        results.append("Missing Token From Syntax")
+        results.append("Error: Missing Token From Syntax")
     else:
-        results.append(f"Syntax error at line {p.lineno}: {p.value}")
+        results.append(f"Syntax Error at line {p.lineno}: {p.value}")
 
-# Build the parser
-# parser = yacc.yacc()
 os.system('cls' if os.name == 'nt' else 'clear')
-# parser = yacc.yacc()
-
-# # Parse an expression
-# result = parser.parse('''2 + 3 * 4''')
-# print(result)
-# parser = yacc.yacc()
-
-# print('_______________________________________________________________________________')
-# while True:
-#    try:
-#        s = input('Jolt >> ')
-#    except EOFError:
-#        break
-#    if not s: continue
-#    result = parser.parse(s)
-#    print(result)
 
 def parseInput(content):
     # Build the parser
@@ -362,84 +342,3 @@ def parseInput(content):
                 results.append(result)
             lineNum = lineNum + 1
         return results
-            
-def parseifileinput(file):
-    # Build the parser
-    parser = yacc.yacc()
-    print('_______________________________________________________________________________')
-    while True:
-        with open(file, 'r') as f:
-            results = []
-            while True:
-                for line in f.readlines():
-                    #print(line)
-                    try:
-                        s = line
-                    except EOFError:
-                        break
-                    if not s: continue
-                    result = parser.parse(s)
-                    if result != "":
-                        results.append(result)
-                    print(results)
-                return results
-
-print('                                 JOLT COMPILER')
-print('_______________________________________________________________________________')
-# parser = yacc.yacc()
-# while True:
-#     try:
-#         print("1. Compile .jolt file")
-#         print("2. Write source code from scratch")
-#         print("3. Exit")
-            
-#         option = input("Menu Option: ")
-
-#         if option == "1":
-#             with open(filepath, 'r') as f:
-#                 while True:
-#                     for line in f.readlines():
-#                         print(line)
-#                         try:
-#                             s = line
-#                         except EOFError:
-#                             break
-#                         if not s: continue
-#                         result = parser.parse(s)
-#                     print("Output: ",result)
-#                     break
-#         elif option == "2":
-#                 lines = 1
-#                 print('_______________________________________________________________________________')
-#                 # print("Enter filename to save source code (or # to skip saving): ")
-#                 # filename = input("Enter filename to save source code (or # to skip saving): ")
-#                 # if filename == "#":
-#                 #     break
-#                 while True:
-#                     try:
-#                         #s = input(f'{lines}| Jolt >> ')
-#                         s = input(f'{lines}| ')
-#                     except EOFError:
-#                         break
-#                     if not s: continue
-#                     result = parser.parse(s)
-#                     print(result)
-#                     lines = lines + 1
-#         elif option == "3":
-#                 print("Thanks For Using Jolt Compiler!")
-#                 break
-#         else:
-#                 print("Invalid choice. Please try again.")
-#     except ZeroDivisionError:
-#         print("\033[1;31mZero Division Error: Cannot divide by zero! \033[0m")
-#     else:
-#         continue
-#     finally:
-#         print("_______________________________________________________________________________")
-#      try:
-#        s = input('Jolt >> ')
-#    except EOFError:
-#        break
-#    if not s: continue
-#    result = parser.parse(s)
-#    print(result)
