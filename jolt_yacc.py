@@ -1,37 +1,39 @@
+# ------------------------------------------------------------
+# Jolt Programming Language
+# Jada Bailey & Garcian Mairs
+# ------------------------------------------------------------
 import os
 import ply.yacc as yacc
 from jolt_lex import * # Get the token map from the lexer. 
 import sys
 from pathlib import Path
 
-filepath = Path(__file__).parent / "sample.jolt"
-# sys.path.append(r'C:\Users\river\Downloads\APL\APL\Jolt-Compiler')
-
 import sys
 
-# Dictionary to store variables and their values.
-variables = {}
-#List to store error messages
-results = []
+variables = {}# Dictionary to store variables and their values.
+results = []#List to store error and parse results messages
 
+#set precedence for arithmetic operations
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
 )
 
+#Start of Grammar
 def p_program(p):
     'program : statement'
     p[0] = p[1]
 
-# Define the rule for a statement, which can be a simple expression or a control structure
+#Grammar Rules & Possible Derivations
 def p_statement(p):
     '''statement : expression
                  | if_statement
+                 | loop
                  | assign
-                 | print '''
+                 | print
+                 | COMMENT '''
     p[0] = p[1]
 
-#brawta
 def p_expression_plus(p):
     '''arith_stmt : expression arithm_symbol expression
                    | expression error term'''
@@ -95,7 +97,10 @@ def p_expression_withidentifier(p):
                   | IDENTIFIER error term'''
     try:
         if p[2] == '+':
-            p[0] = variables[p[1]] + p[3]
+            if type(p[1]) == str and type(p[3]) == str:
+                p[0] = variables[p[1]].strip('"') + p[3].strip('"')
+            else:
+                p[0] = variables[p[1]] + p[3]
         elif p[2] == '-':
             p[0] = variables[p[1]] - p[3]
         elif p[2] == '*':
@@ -111,6 +116,12 @@ def p_expression_withidentifier(p):
             results.append("Error: Invalid Arithmetic Symbol!")
     except ZeroDivisionError:
         results.append("Zero Division Error: Cannot divide by zero.")
+    except TypeError:
+        results.append("Type Error: Invalid pair of data types for operation")
+    except AttributeError:
+        results.append("Attribute Error: Invalid data types for operation")
+    except KeyError:
+        results.append("Key Error: Error accessing identifier!")
 
 def p_expression_comparison(p):
     '''
@@ -137,39 +148,43 @@ def p_expression_comparison2(p):
                 | IDENTIFIER compar_symbol factor
                 | IDENTIFIER error factor
                 | IDENTIFIER error IDENTIFIER'''
-    
-    if p[3] in variables:
-        if p[2] == '>':
-            p[0] = variables[p[1]] > variables[p[3]]
-        elif p[2] == '<':
-            p[0] = variables[p[1]] < variables[p[3]]
-        elif p[2] == '==':
-            p[0] = variables[p[1]] == variables[p[3]]
-        elif p[2] == '?=':
-            p[0] = variables[p[1]] != variables[p[3]]
-        elif p[2] == '>=':
-            p[0] = variables[p[1]] >= variables[p[3]]
-        elif p[2] == '<=':
-            p[0] = variables[p[1]] <= variables[p[3]]
+    try:
+        if p[3] in variables:
+            if p[2] == '>':
+                p[0] = variables[p[1]] > variables[p[3]]
+            elif p[2] == '<':
+                p[0] = variables[p[1]] < variables[p[3]]
+            elif p[2] == '==':
+                p[0] = variables[p[1]] == variables[p[3]]
+            elif p[2] == '?=':
+                p[0] = variables[p[1]] != variables[p[3]]
+            elif p[2] == '>=':
+                p[0] = variables[p[1]] >= variables[p[3]]
+            elif p[2] == '<=':
+                p[0] = variables[p[1]] <= variables[p[3]]
+            else:
+                results.append("Error: Invalid Comparison Statement.")
         else:
-            results.append("Error: Invalid Comparison Statement.")
-    else:
-        if p[2] == '>':
-            p[0] = variables[p[1]] > p[3]
-        elif p[2] == '<':
-            p[0] = variables[p[1]] < p[3]
-        elif p[2] == '==':
-            p[0] = variables[p[1]] == p[3]
-        elif p[2] == '?=':
-            p[0] = variables[p[1]] != p[3] 
-        elif p[2] == '>=':
-            p[0] = variables[p[1]] >= p[3]
-        elif p[2] == '<=':
-            p[0] = variables[p[1]] <= p[3]
-        elif p[2] in conditional_op: 
-            results.append("Error: Invalid Comparative Statement!")
-        else:
-            results.append("Error: Unexpected Arithmetic Symbol!")
+            if p[2] == '>':
+                p[0] = variables[p[1]] > p[3]
+            elif p[2] == '<':
+                p[0] = variables[p[1]] < p[3]
+            elif p[2] == '==':
+                p[0] = variables[p[1]] == p[3]
+            elif p[2] == '?=':
+                p[0] = variables[p[1]] != p[3] 
+            elif p[2] == '>=':
+                p[0] = variables[p[1]] >= p[3]
+            elif p[2] == '<=':
+                p[0] = variables[p[1]] <= p[3]
+            elif p[2] in conditional_op: 
+                results.append("Error: Invalid Comparative Statement!")
+            else:
+                results.append("Error: Unexpected Arithmetic Symbol!")
+    except KeyError:
+        results.append("Key Error: Error Accessing Identifier!")
+    except TypeError:
+        results.append("Type Error: Invalid pair of data types for operation")
 
 def p_expression_term(p):
     'expression : term'
@@ -200,12 +215,14 @@ def p_factor_digit(p):
 
 def p_term_factor_iden(p):
     'term : IDENTIFIER'
-    p[0] = variables[p[1]]
+    try:
+        p[0] = variables[p[1]]
+    except KeyError:
+        results.append("Key Error: Error accessing identifier!")
 
 def p_factor_expr(p):
     'factor : OPENBRACE expression CLOSEBRACE' 
     p[0] = p[2]
-
 
 def p_if_statement(p):
     '''
@@ -214,28 +231,41 @@ def p_if_statement(p):
                  | DOUBLE_LESS EF OPENBRACE compar_stmt CLOSEBRACE DEN statement OREF OPENBRACE compar_stmt CLOSEBRACE DEN statement EFNOT statement DOUBLE_GREATER
                  | DOUBLE_LESS EF OPENBRACE error CLOSEBRACE DEN statement DOUBLE_GREATER
     '''
-    # print("\033[1;31mInvalid IF Statement.\033[0m") 
-
-    if len(p) == 9:  # If there is no else clause
-        if p[4]:
-            p[0] = p[7]  # Execute the consequent statement
-    elif len(p) == 11:  # If there is an else clause
-        if p[4]:
-            p[0] = p[7]  # Execute the consequent statement
-        else:
+    if len(p) == 9:  #Executes if the EF statement has an EFNOT or OREF portion
+        if p[4]: #if the condition is true
+            p[0] = p[7]  #Execute the consequent statement
+    elif len(p) == 11:  #Executes if the EF statement has an EFNOT portion
+        if p[4]: #if the first condition is true
+            p[0] = p[7]  #Execute the consequent statement
+        else: #if the condition is false
            p[0] =  p[9]  # Execute the alternative statement
-    elif len(p) == 17:
-        if p[4]:
-            p[0] = p[7]  # Execute the consequent statement
-        elif p[10]:
+    elif len(p) == 17: #Executes if the EF statement has an OREF portion
+        if p[4]: #if the first condition is true
+            p[0] = p[7]  #Execute the consequent statement
+        elif p[10]: #if the second condition is true
             p[0] =  p[13]
-        else:
+        else: #if none of the conditions are true
             p[0]  = p[15]
     else:
         results.append("Error: Invalid IF Statement.") 
-    # else:
-    #     raise SyntaxError(error_messages['syntax_error'].format(tokens.lineno, tokens.value))
-            
+
+def p_statement_forloop(p):
+    '''loop : DOUBLE_LESS WEN IDENTIFIER IN expression COLON statement DOUBLE_GREATER
+            | DOUBLE_LESS WEN IDENTIFIER IN expression COMMA expression COLON statement DOUBLE_GREATER'''
+    try:
+        if len(p) == 9:
+            for p[3] in range(p[5]):
+                results.append("loop")
+                results.append(p[7])
+        elif len(p) == 11:
+            for p[3] in range(p[5],p[7]):
+                results.append("loop")
+                results.append(p[9])
+        else:
+            results.append("Error: Invalid For Loop.")
+    except TypeError:
+        results.append("Type Error: Invalid For Loop.")
+      
 def p_assign(p):
     '''
     assign : IDENTIFIER ASSIGNMENT expression
@@ -243,12 +273,9 @@ def p_assign(p):
             | IDENTIFIER ASSIGNMENT LETTA
             | IDENTIFIER ASSIGNMENT WHICHEVA
     '''
-    # add the name of function,the identifier name and it's value to a tuple for further processing
-    #p[0] = variables[p[1]] = p[3]
     p[0] = ""
     variables[p[1]] = p[3]
 
-# grammer for a show statement to show whatever is between the parenthesis
 def p_print_show(p):
     '''
     print : SHOW OPENBRACE IDENTIFIER CLOSEBRACE
@@ -273,30 +300,6 @@ def p_print_show2(p):
     else:
        results.append("Error: Invalid Show Statement.")
 
-# def p_accept_input_statement(p):
-#     '''
-#     accept_input : IDENTIFIER ASSIGNMENT SHOW OPENBRACE WUD CLOSEBRACE COLON
-#     '''
-#     p[0] = ""
-#     variables[p[1]] = int(input(p[5]))
-
-    # if p[8] == "numba":
-    #     variables[p[1]] = int(input(p[5]))
-    # elif p[8] == "deci":
-    #     variables[p[1]] = float(input(p[5]))
-    # elif p[8] == "wud":
-    #     variables[p[1]] = str(input(p[5]))
-    # elif p[8] == "letta":
-    #     variables[p[1]] = input(p[5])
-    # else:
-    #     results.append("Identifier Error: Reserved Word Cannot Be An Identifier")
-# def p_expression_logical(p):
-#     '''
-#     expression : expression AND expression
-#                | expression OR expression
-#                | expression NOT expression
-#     '''
-
 def p_error(p):
     results.append("Syntax Error: Input invalid")
     if p is None:
@@ -310,10 +313,8 @@ def parseInput(content):
     # Build the parser
     parser = yacc.yacc()
     results.clear()
-    # results = []
     lineNum = 0
 
-    print('_______________________________________________________________________________')
     while True:
         for lines in content:
             s = lines
@@ -333,12 +334,13 @@ def parseInput(content):
                                     break
                         except IndexError:
                             print("Index out of bound when reading program")
-
-            print(s)
-            # if ":" in s:
-            #     parser.ply.yield_()
-            result = parser.parse(s)
-            if result != "" and result != None:
+            if "~" in s: #ignores comments and does not parse them
+                continue
+            if "loop" in s: #does not append loop results in this function
+                parser.parse(s)
+            else:
+                result = parser.parse(s)
+            if result != "" and result != None: #does not append null results
                 results.append(result)
             lineNum = lineNum + 1
         return results
