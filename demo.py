@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtCore import QRegExp, Qt
-from PyQt5.QtGui import QColor, QTextCharFormat, QSyntaxHighlighter, QFont
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QAction, QFileDialog, QWidget,QVBoxLayout,QPushButton
+from PyQt5.QtGui import QPixmap, QColor, QTextCharFormat, QSyntaxHighlighter, QFont
+from PyQt5.QtWidgets import QLabel, QApplication, QMainWindow, QTextEdit, QAction, QFileDialog, QWidget,QVBoxLayout,QPushButton
 from jolt_yacc import *
 from jolt_lex import reserved
 
@@ -72,65 +72,32 @@ class IDE(QMainWindow):
 
     def initUI(self):
         
-        #Create main widget and layout
-        main_widget = QWidget(self)
-        self.setCentralWidget(main_widget)
-        layout = QVBoxLayout(main_widget)
+         #testing welcome screen
+        self.welcome_widget = QWidget(self)
+        self.setCentralWidget(self.welcome_widget)
+        self.welcome_widget.setGeometry(150, 30, 100, 100)
+        self.welcome_widget.setStyleSheet("color: #4874f4")
+        layout1 = QVBoxLayout(self.welcome_widget)
 
-        self.textEdit = QTextEdit()
-        # self.textEdit.setTextColor()
-        # .setStyleSheet("color: #00008b")
-        # self.textEdit.setText("~Hii~")
-        self.textEdit.setStyleSheet("background-color: #262626;color: #4874f4")
-        self.textEdit.setFont(QFont('Arial', 14))
-        self.textEdit.setGeometry(0, 0, 400, 600)
-        layout.addWidget(self.textEdit)
+        logo = QLabel(self)
+        pixmap = QPixmap('jolt-logo.jpg')
+        logo.setPixmap(pixmap)
+        logo.resize(200, 200)
+        layout1.addWidget(logo)
 
-        self.output_editor = QTextEdit()
-        self.output_editor.setReadOnly(True)
-        layout.addWidget(self.output_editor)
 
-        # create menu bar and file menu
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
+        self.welcome_stmt = QLabel("Jolt-Compiler V.1.0 \n Developed by Jada Bailey and Garcian Mairs", self.welcome_widget)
+        self.welcome_stmt.setAlignment(Qt.AlignCenter)
+        layout1.addWidget(self.welcome_stmt)
+        
+        self.gotoeditor = QPushButton('Go To Compiler',self.welcome_widget )
+        self.gotoeditor.clicked.connect(self.showwindows)
+        self.gotoeditor.move(300,350)
+        self.gotoeditor.resize(200,30)
+        # layout1.addWidget(self.exbutton)
+       
 
-        # create file menu actions
-        newFileAction = QAction('&New', self)
-        newFileAction.setShortcut('Ctrl+N')
-        newFileAction.triggered.connect(self.newFile)
-
-        openFileAction = QAction('&Open', self)
-        openFileAction.setShortcut('Ctrl+O')
-        # openFileAction.triggered.connect(self.openFile)
-        openFileAction.triggered.connect(self.openFile)
-
-        saveFileAction = QAction('&Save', self)
-        saveFileAction.setShortcut('Ctrl+S')
-        saveFileAction.triggered.connect(self.saveFile)
-
-        exitAction = QAction('&Exit', self)
-        exitAction.setShortcut('Ctrl+Q')
-        exitAction.triggered.connect(self.close)
-
-        # add actions to file menu
-        fileMenu.addAction(newFileAction)
-        fileMenu.addAction(openFileAction)
-        fileMenu.addAction(saveFileAction)
-        fileMenu.addAction(exitAction)
-
-        # Add a button widget
-        self.button = QPushButton('Compile', self)
-        self.button.clicked.connect(self.compile)
-        # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
-        self.button.move(570, 3)
-
-         # Add a button widget
-        self.button = QPushButton('Run', self)
-        self.button.clicked.connect(self.run)
-        # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
-        self.button.move(680, 3)
-
-        self.highlighter = MyHighlighter(self.textEdit)
+        #self.setLayout(layout1)
 
         self.setGeometry(400, 100, 800, 600)
         self.setWindowTitle('Jolt IDE')
@@ -174,6 +141,75 @@ class IDE(QMainWindow):
             self.output_editor.insertPlainText("\n")
         # self.output_editor.clear()
         # return content
+    
+
+    def showwindows(self):
+        self.welcome_widget.hide()
+
+        #Create main widget and layout
+        self.main_widget = QWidget(self)
+        self.setCentralWidget(self.main_widget)
+        layout = QVBoxLayout(self.main_widget)
+
+        
+        # create menu bar and file menu
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&File')
+
+        # create file menu actions
+        newFileAction = QAction('&New', self)
+        newFileAction.setShortcut('Ctrl+N')
+        newFileAction.triggered.connect(self.newFile)
+
+        openFileAction = QAction('&Open', self)
+        openFileAction.setShortcut('Ctrl+O')
+        # openFileAction.triggered.connect(self.openFile)
+        openFileAction.triggered.connect(self.openFile)
+
+        saveFileAction = QAction('&Save', self)
+        saveFileAction.setShortcut('Ctrl+S')
+        saveFileAction.triggered.connect(self.saveFile)
+
+        exitAction = QAction('&Exit', self)
+        exitAction.setShortcut('Ctrl+Q')
+        exitAction.triggered.connect(self.close)
+
+        # add actions to file menu
+        fileMenu.addAction(newFileAction)
+        fileMenu.addAction(openFileAction)
+        fileMenu.addAction(saveFileAction)
+        fileMenu.addAction(exitAction)
+
+        layout.addWidget(menubar)
+
+        self.textEdit = QTextEdit()
+        # self.textEdit.setTextColor()
+        # .setStyleSheet("color: #00008b")
+        # self.textEdit.setText("~Hii~")
+        self.textEdit.setStyleSheet("background-color: #262626;color: #4874f4")
+        self.textEdit.setFont(QFont('Arial', 14))
+        self.textEdit.setGeometry(0, 0, 400, 600)
+        layout.addWidget(self.textEdit)
+
+
+        self.output_editor = QTextEdit()
+        self.output_editor.setReadOnly(True)
+        layout.addWidget(self.output_editor)
+
+        # Add a button widget
+        self.button = QPushButton('Compile', self.main_widget)
+        self.button.clicked.connect(self.compile)
+        # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
+        self.button.move(570, 3)
+
+         # Add a button widget
+        self.button = QPushButton('Run', self.main_widget)
+        self.button.clicked.connect(self.run)
+        # self.button.clicked.connect(lambda: self.output_editor.setPlainText(''))
+        self.button.move(680, 3)
+
+        self.highlighter = MyHighlighter(self.textEdit)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
