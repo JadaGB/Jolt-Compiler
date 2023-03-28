@@ -5,14 +5,13 @@ Unused terminals:
     AND
     COLON
     COMMENT
-    Deci
     END_LINE
-    FUNCTION
-    Letta
     NOT
-    Numba
     OR
-    Wud
+    deci
+    letta
+    numba
+    wud
 
 Grammar
 
@@ -81,25 +80,21 @@ DEN                  : 39 40 41 41 42
 DIVIDE               : 15
 DOUBLE_GREATER       : 39 40 41 42
 DOUBLE_LESS          : 39 40 41 42
-Deci                 : 
 EF                   : 39 40 41 42
 EFNOT                : 40 41
 END_LINE             : 
 EQUAL                : 20
-FUNCTION             : 
 GREATER_EQUAL        : 22
 GREATER_THAN         : 18
 IDENTIFIER           : 24 25 28 28 29 30 31 31 37 43 44 45 46 47
 LESS_EQUAL           : 23
 LESS_THAN            : 19
 LETTA                : 45 50
-Letta                : 
 MINUS                : 14
 MODULUS              : 17
 NOT                  : 
 NOT_EQUAL            : 21
 NUMBA                : 35
-Numba                : 
 OPENBRACE            : 38 39 40 41 41 42 47 48 49 50 51
 OR                   : 
 OREF                 : 41
@@ -108,8 +103,11 @@ SHOW                 : 47 48 49 50 51
 TIMES                : 16
 WHICHEVA             : 46
 WUD                  : 44 49
-Wud                  : 
+deci                 : 
 error                : 7 25 27 30 31 42 51
+letta                : 
+numba                : 
+wud                  : 
 
 Nonterminals, with rules where they appear
 

@@ -11,12 +11,11 @@ reserved = {
    'den' : 'DEN',
    'efnot' : 'EFNOT',
    'oref' : 'OREF',
-   'mumba':'Numba',
-   'deci':'Deci',
-   'wud':'Wud',
-   'letta':'Letta',
+   'numba':'numba',
+   'deci':'deci',
+   'wud':'wud',
+   'letta':'letta',
    'show' : 'SHOW',
-   'function' : 'FUNCTION'
 }
 
 digits=[
@@ -88,6 +87,7 @@ t_LESS_THAN  = r'<'
 t_GREATER_EQUAL  = r'\>='
 t_LESS_EQUAL  = r'\<='
 
+t_COLON   = r'\:'
 t_ASSIGNMENT    = r'\='
 t_END_LINE   = r'\.'
 t_OPENBRACE  = r'\('

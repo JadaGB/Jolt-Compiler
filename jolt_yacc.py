@@ -28,7 +28,7 @@ def p_statement(p):
     '''statement : expression
                  | if_statement
                  | assign
-                 | print  '''
+                 | print '''
     p[0] = p[1]
 
 #brawta
@@ -273,8 +273,25 @@ def p_print_show2(p):
         if type(p[3]) == str:
             p[0] = p[3].strip('"')
     else:
-       results.append("Invalid Show Statement.")
+       results.append("Error: Invalid Show Statement.")
 
+# def p_accept_input_statement(p):
+#     '''
+#     accept_input : IDENTIFIER ASSIGNMENT SHOW OPENBRACE WUD CLOSEBRACE COLON
+#     '''
+#     p[0] = ""
+#     variables[p[1]] = int(input(p[5]))
+
+    # if p[8] == "numba":
+    #     variables[p[1]] = int(input(p[5]))
+    # elif p[8] == "deci":
+    #     variables[p[1]] = float(input(p[5]))
+    # elif p[8] == "wud":
+    #     variables[p[1]] = str(input(p[5]))
+    # elif p[8] == "letta":
+    #     variables[p[1]] = input(p[5])
+    # else:
+    #     results.append("Identifier Error: Reserved Word Cannot Be An Identifier")
 # def p_expression_logical(p):
 #     '''
 #     expression : expression AND expression
@@ -297,6 +314,17 @@ os.system('cls' if os.name == 'nt' else 'clear')
 # # Parse an expression
 # result = parser.parse('''2 + 3 * 4''')
 # print(result)
+# parser = yacc.yacc()
+
+# print('_______________________________________________________________________________')
+# while True:
+#    try:
+#        s = input('Jolt >> ')
+#    except EOFError:
+#        break
+#    if not s: continue
+#    result = parser.parse(s)
+#    print(result)
 
 def parseInput(content):
     # Build the parser
@@ -327,6 +355,8 @@ def parseInput(content):
                             print("Index out of bound when reading program")
 
             print(s)
+            # if ":" in s:
+            #     parser.ply.yield_()
             result = parser.parse(s)
             if result != "" and result != None:
                 results.append(result)
