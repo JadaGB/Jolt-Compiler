@@ -10,8 +10,10 @@ from pathlib import Path
 
 import sys
 
-variables = {}# Dictionary to store variables and their values.
-results = []#List to store error and parse results messages
+# Dictionary to store variables and their values.
+variables = {}
+#List to store error and parse results messages
+results = []
 
 #set precedence for arithmetic operations
 precedence = (
@@ -33,6 +35,14 @@ def p_statement(p):
                  | print
                  | COMMENT '''
     p[0] = p[1]
+
+def p_stmt2(p):
+    '''statement : statement COMMA statement '''
+    a = []
+    if p[1] != None:
+        a.append(p[1])
+    a.append(p[3])
+    p[0] = a
 
 def p_expression_plus(p):
     '''arith_stmt : expression arithm_symbol expression
@@ -231,20 +241,33 @@ def p_if_statement(p):
                  | DOUBLE_LESS EF OPENBRACE compar_stmt CLOSEBRACE DEN statement OREF OPENBRACE compar_stmt CLOSEBRACE DEN statement EFNOT statement DOUBLE_GREATER
                  | DOUBLE_LESS EF OPENBRACE error CLOSEBRACE DEN statement DOUBLE_GREATER
     '''
-    if len(p) == 9:  #Executes if the EF statement has an EFNOT or OREF portion
-        if p[4]: #if the condition is true
-            p[0] = p[7]  #Execute the consequent statement
-    elif len(p) == 11:  #Executes if the EF statement has an EFNOT portion
-        if p[4]: #if the first condition is true
-            p[0] = p[7]  #Execute the consequent statement
-        else: #if the condition is false
-           p[0] =  p[9]  # Execute the alternative statement
-    elif len(p) == 17: #Executes if the EF statement has an OREF portion
-        if p[4]: #if the first condition is true
-            p[0] = p[7]  #Execute the consequent statement
-        elif p[10]: #if the second condition is true
+    #Executes if the EF statement has an EFNOT or OREF portion
+    if len(p) == 9:  
+        #if the condition is true
+        if p[4]: 
+            #Execute the consequent statement
+            p[0] = p[7]  
+    #Executes if the EF statement has an EFNOT portion
+    elif len(p) == 11:  
+        #if the first condition is true
+        if p[4]: 
+            #Execute the consequent statement
+            p[0] = p[7]  
+        #if the condition is false
+        else: 
+           #Execute the alternative statement
+           p[0] =  p[9] 
+    #Executes if the EF statement has an OREF portion
+    elif len(p) == 17: 
+        #if the first condition is true
+        if p[4]: 
+            #Execute the consequent statement
+            p[0] = p[7] 
+        #if the second condition is true
+        elif p[10]: 
             p[0] =  p[13]
-        else: #if none of the conditions are true
+        #if none of the conditions are true
+        else: 
             p[0]  = p[15]
     else:
         results.append("Error: Invalid IF Statement.") 
@@ -255,11 +278,11 @@ def p_statement_forloop(p):
     try:
         if len(p) == 9:
             for p[3] in range(p[5]):
-                results.append("loop")
+                # results.append("loop")
                 results.append(p[7])
         elif len(p) == 11:
             for p[3] in range(p[5],p[7]):
-                results.append("loop")
+                # results.append("loop")
                 results.append(p[9])
         else:
             results.append("Error: Invalid For Loop.")
@@ -273,7 +296,6 @@ def p_assign(p):
             | IDENTIFIER ASSIGNMENT LETTA
             | IDENTIFIER ASSIGNMENT WHICHEVA
     '''
-    p[0] = ""
     variables[p[1]] = p[3]
 
 def p_print_show(p):
@@ -312,6 +334,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 def parseInput(content):
     # Build the parser
     parser = yacc.yacc()
+    variables.clear()
     results.clear()
     lineNum = 0
 
@@ -336,11 +359,12 @@ def parseInput(content):
                             print("Index out of bound when reading program")
             if "~" in s: #ignores comments and does not parse them
                 continue
-            if "loop" in s: #does not append loop results in this function
-                parser.parse(s)
-            else:
-                result = parser.parse(s)
+            # if "loop" in s: #does not append loop results in this function
+            #     parser.parse(s)
+            # else:
+            result = parser.parse(s)
             if result != "" and result != None: #does not append null results
                 results.append(result)
             lineNum = lineNum + 1
+            # print(variables)
         return results

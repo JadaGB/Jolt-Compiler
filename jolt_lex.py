@@ -43,7 +43,6 @@ tokens = [
    'IDENTIFIER',
    'WUD',
    'LETTA',
-   'WHICHEVA',
 
    #Symbols
    'COMMA',
@@ -105,11 +104,6 @@ def t_WUD(t):
     # \\. matches an escaped character (e.g., \" or \\).
     r'"([^"\\]|\\.)*"'
     t.value = t.value
-    return t
-
-def t_WHICHEVA(t):
-    r'False' #Need to fix
-    t.value = bool(t.value)
     return t
 
 def t_COMMENT(t):

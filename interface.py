@@ -1,3 +1,7 @@
+# ------------------------------------------------------------
+# Jolt Programming Language
+# Jada Bailey & Garcian Mairs
+# ------------------------------------------------------------
 import sys
 from PyQt5.QtCore import QRegExp, Qt
 from PyQt5.QtGui import QPixmap, QColor, QTextCharFormat, QSyntaxHighlighter, QFont, QIcon
@@ -5,6 +9,7 @@ from PyQt5.QtWidgets import QLabel, QApplication, QMainWindow, QTextEdit, QActio
 from jolt_yacc import *
 from jolt_lex import reserved
 
+#Highlighting lex rules
 class MyHighlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
         super(MyHighlighter, self).__init__(parent)
@@ -76,7 +81,7 @@ class IDE(QMainWindow):
 
         logo = QLabel(self)
         # pixmap = QPixmap("logo1.png")
-        pixmap = QPixmap("C:/Users/river/Downloads/APL/APL/Jolt-Compiler/logo1.png")
+        pixmap = QPixmap("C:/Users/Garci/OneDrive/Desktop/APL/Jolt-Compiler/logo1.png")
         pixmap = pixmap.scaled(400,400)
         logo.setAlignment(Qt.AlignCenter)
         logo.setPixmap(pixmap)
@@ -119,16 +124,21 @@ class IDE(QMainWindow):
     #Compiles code in editor when button clicked
     def compile(self):
         errors = 0
-        content = self.textEdit.toPlainText().splitlines() #get text from editor
-        output = parseInput(content) #pass data to parser
+        #get text from editor
+        content = self.textEdit.toPlainText().splitlines() 
+        #pass data to parser
+        output = parseInput(content) 
         self.output_editor.clear()
-        for line in output: #loops through the parser results
-            if "Error" in str(line): #prints errors & set color to red
+        #loops through the parser results
+        for line in output: 
+            #prints errors & set color to red
+            if "Error" in str(line): 
                 errors = errors + 1
                 self.output_editor.setStyleSheet("background-color: #E0BBE4; color: #e60000")
                 self.output_editor.insertPlainText(str(line))
                 self.output_editor.insertPlainText("\n")
-        if errors == 0: #if no errors found, set color back to default
+        #if no errors found, set color back to default
+        if errors == 0: 
             self.output_editor.setStyleSheet("background-color: #E0BBE4; color: #000000")
             self.output_editor.insertPlainText("Compiled Successfully!")
         err = ("Errors Found: ",errors)
@@ -136,16 +146,24 @@ class IDE(QMainWindow):
 
     #Executes code in editor when button clicked
     def run(self):
-        content = self.textEdit.toPlainText().splitlines() #get text from editor
-        output = parseInput(content) #pass data to parser
+        #get text from editor
+        content = self.textEdit.toPlainText().splitlines() 
+        #pass data to parser
+        output = parseInput(content) 
         self.output_editor.clear()
-        for line in output: #loops through the parser results
-            if "loop" not in str(line):
-                if "Error" in str(line): #prints errors & set color to red
+        #loops through the parser results
+        for line in output: 
+            # if "loop" not in str(line):
+                #prints errors & set color to red
+                if "Error" in str(line): 
                     self.output_editor.setStyleSheet("background-color: #E0BBE4; color: #e60000")
                     self.output_editor.insertPlainText(str(line))
                     self.output_editor.insertPlainText("\n")
                 else:
+                    if "," in str(line):
+                        line = str(line).replace(",","")
+                        line = str(line).replace("]","")
+                        line = str(line).replace("[","")
                     self.output_editor.setStyleSheet("background-color: #E0BBE4; color: #000000")
                     self.output_editor.insertPlainText(str(line))
                     self.output_editor.insertPlainText("\n")
