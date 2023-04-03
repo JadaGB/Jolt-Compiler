@@ -80,8 +80,7 @@ class IDE(QMainWindow):
         layout1.addWidget(self.welcome_stmt) 
 
         logo = QLabel(self)
-        # pixmap = QPixmap("logo1.png")
-        pixmap = QPixmap("C:/Users/Garci/OneDrive/Desktop/APL/Jolt-Compiler/logo1.png")
+        pixmap = QPixmap("logo1.png")
         pixmap = pixmap.scaled(400,400)
         logo.setAlignment(Qt.AlignCenter)
         logo.setPixmap(pixmap)
