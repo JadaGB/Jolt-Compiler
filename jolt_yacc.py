@@ -25,6 +25,7 @@ precedence = (
 def p_program(p):
     'program : statement'
     p[0] = p[1]
+    print('program_statement',p[1])
 
 #Grammar Rules & Possible Derivations
 def p_statement(p):
@@ -35,6 +36,7 @@ def p_statement(p):
                  | print
                  | COMMENT '''
     p[0] = p[1]
+    print('statement')
 
 def p_stmt2(p):
     '''statement : statement COMMA statement '''
@@ -46,7 +48,7 @@ def p_stmt2(p):
 
 def p_expression_plus(p):
     '''arith_stmt : expression arithm_symbol expression
-                   | expression error term'''
+                  | expression error term'''
     try:
         if p[2] == '*':
             p[0] = p[1] * p[3]
@@ -69,21 +71,25 @@ def p_expression_plus(p):
         results.append("Zero Division Error: Cannot divide by zero.")
     except TypeError:
        results.append("Type Error: Expected Numba or Deci.")
+    print('arithmetic_statement',p[2],p[1],p[3])
 
 def p_expression_symbol(p):
     ''' expression : symbol'''
     p[0] = p[1]
+    print('expression-symbol',p[1])
 
 def p_expression_stmt_types(p):
     ''' expression : compar_stmt
                    | arith_stmt'''
     p[0] = p[1]
+    print('expression-statement',p[1])
 
 def p_expr_symbols(p):
     ''' symbol : arithm_symbol 
                | compar_symbol'''
     
     p[0] = p[1]
+    print('symbol',p[1])
 
 def p_symbol_arithm(p):
     ''' arithm_symbol : PLUS
@@ -92,6 +98,7 @@ def p_symbol_arithm(p):
                       | TIMES
                       | MODULUS '''
     p[0] = p[1]
+    print('arithmetic_symbol',p[1])
 
 def p_symbol_comparison(p):
     ''' compar_symbol : GREATER_THAN
@@ -101,6 +108,7 @@ def p_symbol_comparison(p):
                       | GREATER_EQUAL
                       | LESS_EQUAL '''
     p[0] = p[1]
+    print('comparative_symbol',p[1])
 
 def p_expression_withidentifier(p):
     '''arith_stmt : IDENTIFIER arithm_symbol term
@@ -132,6 +140,7 @@ def p_expression_withidentifier(p):
         results.append("Attribute Error: Invalid data types for operation")
     except KeyError:
         results.append("Key Error: Error accessing identifier!")
+    print('arithm-stmt',p[1],p[3])
 
 def p_expression_comparison(p):
     '''
@@ -151,6 +160,7 @@ def p_expression_comparison(p):
         p[0] = p[1] <= p[3]
     else:
         results.append("Error: Invalid Comparison Symbol!")
+    print('compar-stmt',p[2],p[1],p[3])
 
 def p_expression_comparison2(p):
     '''
@@ -195,14 +205,17 @@ def p_expression_comparison2(p):
         results.append("Key Error: Error Accessing Identifier!")
     except TypeError:
         results.append("Type Error: Invalid pair of data types for operation")
+    print('compar_stmt',p[2],p[1],p[3])
 
 def p_expression_term(p):
     'expression : term'
     p[0] = p[1]
+    print('expression-term',p[1])
 
 def p_term_factor(p):
     'term : factor'
     p[0] = p[1]
+    print('term-factor',p[1])
 
 def p_term_times_div_factors(p):
     '''arith_symbol : factor arithm_symbol factor '''
@@ -215,6 +228,7 @@ def p_term_times_div_factors(p):
         p[0] = p[1] + p[3]
     else:
         p[0] = p[1] - p[3]
+    print('arith_symbol',p[2],p[1],p[3])
 
 def p_factor_digit(p):
     '''
@@ -222,6 +236,7 @@ def p_factor_digit(p):
             | DECI
     '''
     p[0] = p[1]
+    print("factor",p[1])
 
 def p_term_factor_iden(p):
     'term : IDENTIFIER'
@@ -229,10 +244,12 @@ def p_term_factor_iden(p):
         p[0] = variables[p[1]]
     except KeyError:
         results.append("Key Error: Error accessing identifier!")
+    print('term-identifier',p[1])
 
 def p_factor_expr(p):
     'factor : OPENBRACE expression CLOSEBRACE' 
     p[0] = p[2]
+    print('factor',p[1],p[2],p[3])
 
 def p_if_statement(p):
     '''
@@ -247,30 +264,37 @@ def p_if_statement(p):
         if p[4]: 
             #Execute the consequent statement
             p[0] = p[7]  
+            print('if_statement',p[2],p[4],p[7])
     #Executes if the EF statement has an EFNOT portion
     elif len(p) == 11:  
         #if the first condition is true
         if p[4]: 
             #Execute the consequent statement
             p[0] = p[7]  
+            print('if_statement',p[2],p[4],p[7])
         #if the condition is false
         else: 
            #Execute the alternative statement
            p[0] =  p[9] 
+           print('if_statement',p[2],p[4],p[7],p[8],p[9])
     #Executes if the EF statement has an OREF portion
     elif len(p) == 17: 
         #if the first condition is true
         if p[4]: 
             #Execute the consequent statement
             p[0] = p[7] 
+            print('if_statement',p[2],p[4],p[7])
         #if the second condition is true
         elif p[10]: 
             p[0] =  p[13]
+            print('if_statement',p[2],p[4],p[7],p[8],p[10],p[13],p[14],p[15])
         #if none of the conditions are true
         else: 
-            p[0]  = p[15]
+            p[0] = p[15]
+            print('if_statement',p[2],p[4],p[7],p[8],p[10],p[13],p[14],p[15])
     else:
         results.append("Error: Invalid IF Statement.") 
+    
 
 def p_statement_forloop(p):
     '''loop : DOUBLE_LESS WEN IDENTIFIER IN expression COLON statement DOUBLE_GREATER
@@ -280,23 +304,28 @@ def p_statement_forloop(p):
             for p[3] in range(p[5]):
                 # results.append("loop")
                 results.append(p[7])
+            print('loop',p[2],p[3],p[5],p[7])
         elif len(p) == 11:
             for p[3] in range(p[5],p[7]):
                 # results.append("loop")
                 results.append(p[9])
+            print('loop',p[2],p[3],p[5],p[7],p[9])
         else:
-            results.append("Error: Invalid For Loop.")
+            results.append("Error: Invalid Wen Loop.")
     except TypeError:
-        results.append("Type Error: Invalid For Loop.")
+        results.append("Type Error: Invalid Wen Loop.")
+    except IndexError:
+        results.append(" Index Error: Wen Loop Out of Bounds.")
+    
       
 def p_assign(p):
     '''
     assign : IDENTIFIER ASSIGNMENT expression
-            | IDENTIFIER ASSIGNMENT WUD
-            | IDENTIFIER ASSIGNMENT LETTA
-            | IDENTIFIER ASSIGNMENT WHICHEVA
+           | IDENTIFIER ASSIGNMENT WUD
+           | IDENTIFIER ASSIGNMENT LETTA
     '''
     variables[p[1]] = p[3]
+    print('assign',p[1],p[3])
 
 def p_print_show(p):
     '''
@@ -306,6 +335,7 @@ def p_print_show(p):
         p[0] = variables[p[3]]
     else:
         results.append("Null Value Error: Identifier Needs Initiaization.")
+    print('print',p[1],p[3])
         
 def p_print_show2(p):
     '''
@@ -321,17 +351,17 @@ def p_print_show2(p):
             p[0] = p[3].strip('"')
     else:
        results.append("Error: Invalid Show Statement.")
+    print('print',p[1],p[3])
 
 def p_error(p):
     results.append("Syntax Error: Input invalid")
     if p is None:
         results.append("Error: Missing Token From Syntax")
     else:
-        results.append(f"Syntax Error at line {p.lineno}: {p.value}")
-
-os.system('cls' if os.name == 'nt' else 'clear')
+        results.append(f"Syntax Error at : {p.value}")
 
 def parseInput(content):
+    os.system('cls' if os.name == 'nt' else 'clear')
     # Build the parser
     parser = yacc.yacc()
     variables.clear()
@@ -356,7 +386,8 @@ def parseInput(content):
                                 if ">>" in s:
                                     break
                         except IndexError:
-                            print("Index out of bound when reading program")
+                            results.append("Index out of bound when reading program")
+                            break
             if "~" in s: #ignores comments and does not parse them
                 continue
             # if "loop" in s: #does not append loop results in this function
